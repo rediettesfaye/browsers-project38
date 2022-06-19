@@ -34,6 +34,10 @@ export const initQuestionPage = () => {
     document
       .getElementById(ANSWERS_OPTION_RADIO_BUTTON_ID + '_' + key)
       .addEventListener('change', changeOption.bind(null, key));
+
+    document
+      .getElementById(ANSWERS_OPTION_ID + '_' + key)
+      .addEventListener('click', changeOption.bind(null, key));
   }
 
   document
@@ -49,8 +53,15 @@ const nextQuestion = () => {
 
 const changeOption = (key) => {
   getCurrentQuestion().selected = key;
+  checkRadioButton(key);
   clearAllSelections();
   selectAnswer(key);
+};
+
+const checkRadioButton = (key) => {
+  document.getElementById(
+    ANSWERS_OPTION_RADIO_BUTTON_ID + '_' + key
+  ).checked = true;
 };
 
 const clearAllSelections = () => {
