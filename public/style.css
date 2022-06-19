@@ -15,3 +15,23 @@
 ul {
   list-style: none;
 }
+
+li {
+  text-align: start;
+}
+
+.question {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.answer{
+  margin: 1px;
+}
+
+.selected-answer{
+  background-color: beige;
+  margin: 0px;
+  border: 1px solid gainsboro;
+}
