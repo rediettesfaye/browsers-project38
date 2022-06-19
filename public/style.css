@@ -28,6 +28,7 @@ li {
 
 .answer{
   margin: 1px;
+  cursor: pointer;
 }
 
 .selected-answer{
