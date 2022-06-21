@@ -36,3 +36,8 @@ li {
   margin: 0px;
   border: 1px solid gainsboro;
 }
+
+.hide {
+
+  display: none;
+}

@@ -40,16 +40,13 @@ export const initQuestionPage = () => {
       .addEventListener('click', changeOption.bind(null, key));
   }
 
-  document
-    .getElementById(NEXT_QUESTION_BUTTON_ID)
-    .addEventListener('click', nextQuestion);
 };
 
 const nextQuestion = () => {
-  quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
+quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
+initQuestionPage();
 
-  initQuestionPage();
-};
+  }
 
 const changeOption = (key) => {
   getCurrentQuestion().selected = key;
@@ -79,5 +76,6 @@ const selectAnswer = (key) => {
 };
 
 const getCurrentQuestion = () => {
-  return quizData.questions[quizData.currentQuestionIndex];
+  return randomQuestionsArray[quizData.currentQuestionIndex]
+ 
 };
