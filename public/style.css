@@ -28,6 +28,9 @@ li {
 
 .answer {
   margin: 1px;
+}
+
+.pointer {
   cursor: pointer;
 }
 

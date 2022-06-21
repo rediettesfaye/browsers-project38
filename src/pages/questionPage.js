@@ -52,9 +52,13 @@ const nextQuestion = () => {
 };
 
 const changeOption = (key) => {
+  if (getCurrentQuestion().selected) {
+    return;
+  }
   getCurrentQuestion().selected = key;
   checkRadioButton(key);
   clearAllSelections();
+  clearAllPointerFromCursor();
   selectAnswer(key);
   showCorrectAnswer();
 };
@@ -72,6 +76,14 @@ const clearAllSelections = () => {
     }
   );
 };
+
+const clearAllPointerFromCursor = () => {
+  Array.from(document.getElementById(ANSWERS_LIST_ID).children).forEach(
+    (li) => {
+      li.classList.remove('pointer');
+    }
+  );
+}
 
 const selectAnswer = (key) => {
   document
