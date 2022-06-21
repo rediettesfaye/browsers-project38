@@ -9,7 +9,7 @@ import {
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
-import { quizData } from '../data.js';
+import { quizData, randomQuestionsArray } from '../data.js';
 
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
@@ -39,6 +39,19 @@ export const initQuestionPage = () => {
       .getElementById(ANSWERS_OPTION_ID + '_' + key)
       .addEventListener('click', changeOption.bind(null, key));
   }
+
+  if(quizData.currentQuestionIndex < 9) {
+   document
+    .getElementById(NEXT_QUESTION_BUTTON_ID)
+    .addEventListener('click', nextQuestion);
+ } else {
+  document.getElementById(NEXT_QUESTION_BUTTON_ID).classList.add("hide")
+  const finishButton = document.createElement('button');
+  finishButton.innerText = "See Results" ;
+  userInterface.appendChild(finishButton)
+
+ }
+
 
 };
 
@@ -79,3 +92,17 @@ const getCurrentQuestion = () => {
   return randomQuestionsArray[quizData.currentQuestionIndex]
  
 };
+window.addEventListener('load' , () => { 
+  let randomIndexesOfQuestions = [];
+
+  quizData.questions.forEach(question =>{
+    let randomIndex = Math.floor(Math.random()* quizData.questions.length)
+    if(!randomIndexesOfQuestions.includes(randomIndex) && randomIndexesOfQuestions.length<10){
+      randomIndexesOfQuestions.push(randomIndex)
+    }
+  })
+    randomIndexesOfQuestions.forEach(index =>{
+      randomQuestionsArray.push(quizData.questions[index])
+    })
+    console.log(randomQuestionsArray)
+   })

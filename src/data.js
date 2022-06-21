@@ -381,5 +381,5 @@ export const quizData = {
   ],
 };
 
-
+export const randomQuestionsArray = [] 
     
