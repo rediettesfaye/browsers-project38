@@ -56,6 +56,7 @@ const changeOption = (key) => {
   checkRadioButton(key);
   clearAllSelections();
   selectAnswer(key);
+  showCorrectAnswer();
 };
 
 const checkRadioButton = (key) => {
@@ -80,4 +81,11 @@ const selectAnswer = (key) => {
 
 const getCurrentQuestion = () => {
   return quizData.questions[quizData.currentQuestionIndex];
+};
+
+const showCorrectAnswer = () => {
+  const correctOption = getCurrentQuestion().correct;
+  document
+    .getElementById(ANSWERS_OPTION_ID + '_' + correctOption)
+    .classList.add('correct-answer');
 };
