@@ -26,18 +26,29 @@ li {
   align-items: center;
 }
 
-.answer{
+.answer {
   margin: 1px;
+}
+
+.pointer {
   cursor: pointer;
 }
 
-.selected-answer{
+.selected-answer {
   background-color: beige;
   margin: 0px;
   border: 1px solid gainsboro;
 }
 
+
 .hide {
 
   display: none;
 }
+
+.correct-answer {
+  background-color: rgb(194, 255, 187);
+  margin: 0px;
+  border: 1px solid rgb(220, 220, 220);
+}
+
