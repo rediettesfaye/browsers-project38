@@ -21,7 +21,7 @@ export const createQuestionElement = (question) => {
     </ul>
 
     <button id="${NEXT_QUESTION_BUTTON_ID}">
-      Next question
+      Next
     </button>
   `;
 
