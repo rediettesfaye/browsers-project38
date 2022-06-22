@@ -32,7 +32,7 @@ const setDefaultUserName = () => {
 const registerName = () => {
   const usernameInput = document.getElementById(USERNAME_INPUT_ID);
   storageService.setCurrentUsername(usernameInput.value);
-  //   storageService.resetUser(usernameInput.value);
+  storageService.resetUser(usernameInput.value);
   startQuiz();
 };
 
