@@ -3,13 +3,16 @@
 import {
   ANSWERS_LIST_ID,
   ANSWERS_OPTION_ID,
-  ANSWERS_OPTION_RADIO_BUTTON_ID,
   NEXT_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { quizData } from '../data.js';
+import { storageService } from '../services/storeService.js';
+
+// TODO this variable will change with the username that will be taken from user
+const username = 'username';
 
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
@@ -27,13 +30,9 @@ export const initQuestionPage = () => {
     const answerElement = createAnswerElement(
       key,
       answerText,
-      currentQuestion.selected
+      createClassListForAnswer(quizData.currentQuestionIndex, key)
     );
     answersListElement.appendChild(answerElement);
-
-    document
-      .getElementById(ANSWERS_OPTION_RADIO_BUTTON_ID + '_' + key)
-      .addEventListener('change', changeOption.bind(null, key));
 
     document
       .getElementById(ANSWERS_OPTION_ID + '_' + key)
@@ -45,6 +44,20 @@ export const initQuestionPage = () => {
     .addEventListener('click', nextQuestion);
 };
 
+const createClassListForAnswer = (questionIndex, key) => {
+  const classList = [];
+  if (storageService.hasAnswer(username, questionIndex)) {
+    if (getCurrentQuestion().correct === key) {
+      classList.push('correct-answer');
+    } else if (storageService.getAnswer(username, questionIndex) === key) {
+      classList.push('selected-answer');
+    }
+  } else {
+    classList.push('pointer');
+  }
+  return classList.length > 0 ? classList : null;
+};
+
 const nextQuestion = () => {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
 
@@ -52,21 +65,14 @@ const nextQuestion = () => {
 };
 
 const changeOption = (key) => {
-  if (getCurrentQuestion().selected) {
+  if (storageService.hasAnswer(username, quizData.currentQuestionIndex)) {
     return;
   }
-  getCurrentQuestion().selected = key;
-  checkRadioButton(key);
   clearAllSelections();
   clearAllPointerFromCursor();
   selectAnswer(key);
+  setStyleForSelectedAnswer(key);
   showCorrectAnswer();
-};
-
-const checkRadioButton = (key) => {
-  document.getElementById(
-    ANSWERS_OPTION_RADIO_BUTTON_ID + '_' + key
-  ).checked = true;
 };
 
 const clearAllSelections = () => {
@@ -83,9 +89,13 @@ const clearAllPointerFromCursor = () => {
       li.classList.remove('pointer');
     }
   );
-}
+};
 
 const selectAnswer = (key) => {
+  storageService.saveAnswer(username, quizData.currentQuestionIndex, key);
+};
+
+const setStyleForSelectedAnswer = (key) => {
   document
     .getElementById(ANSWERS_OPTION_ID + '_' + key)
     .classList.add('selected-answer');
