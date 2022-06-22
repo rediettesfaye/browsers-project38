@@ -10,8 +10,7 @@ import {
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { quizData, randomQuestionsArray } from '../data.js';
-import showRandomQuestions from '../views/showRandomQuestions.js';
-
+import { showRandomQuestions } from '../data.js';
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
@@ -108,7 +107,7 @@ const getCurrentQuestion = () => {
 };
 
 window.addEventListener('load' , () => { 
- showRandomQuestions(quizData, randomQuestionsArray)
+ showRandomQuestions()
 
    })
 
