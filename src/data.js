@@ -107,7 +107,7 @@ export const quizData = {
       ],
     },
     {
-      text: 'What is the correct translation for "mashroom"??',
+      text: 'What is the correct translation for "mushroom"??',
       answers: {
         a: 'de boter',
         b: 'de komkommer',
@@ -271,7 +271,7 @@ export const quizData = {
       ],
     },
     {
-      text: 'What is the correct translation for "umberlla"?',
+      text: 'What is the correct translation for "umbrella"?',
       answers: {
         a: 'de fiets',
         b: 'de telefone',
