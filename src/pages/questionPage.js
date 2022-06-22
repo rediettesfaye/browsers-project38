@@ -11,9 +11,6 @@ import { createAnswerElement } from '../views/answerView.js';
 import { quizData } from '../data.js';
 import { storageService } from '../services/storeService.js';
 
-// TODO this variable will change with the username that will be taken from user
-const username = 'username';
-
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
@@ -46,10 +43,10 @@ export const initQuestionPage = () => {
 
 const createClassListForAnswer = (questionIndex, key) => {
   const classList = [];
-  if (storageService.hasAnswer(username, questionIndex)) {
+  if (storageService.hasAnswer(questionIndex)) {
     if (getCurrentQuestion().correct === key) {
       classList.push('correct-answer');
-    } else if (storageService.getAnswer(username, questionIndex) === key) {
+    } else if (storageService.getAnswer(questionIndex) === key) {
       classList.push('selected-answer');
     }
   } else {
@@ -65,7 +62,7 @@ const nextQuestion = () => {
 };
 
 const changeOption = (key) => {
-  if (storageService.hasAnswer(username, quizData.currentQuestionIndex)) {
+  if (storageService.hasAnswer(quizData.currentQuestionIndex)) {
     return;
   }
   clearAllSelections();
@@ -92,7 +89,7 @@ const clearAllPointerFromCursor = () => {
 };
 
 const selectAnswer = (key) => {
-  storageService.saveAnswer(username, quizData.currentQuestionIndex, key);
+  storageService.saveAnswer(quizData.currentQuestionIndex, key);
 };
 
 const setStyleForSelectedAnswer = (key) => {

@@ -1,35 +1,43 @@
-export const storageService = (() => {
-  const getAllAnswers = (username) =>
-    _toJson(window.localStorage.getItem(username));
+const CURRENT_USERNAME = 'CURRENT_USERNAME';
 
-  const saveAnswer = (username, questionId, answer) => {
-    const answersOfUser = getAllAnswers(username);
-    answersOfUser[questionId] = answer;
-    window.localStorage.setItem(username, _toString(answersOfUser));
+export const storageService = (() => {
+  const setCurrentUsername = (username) =>
+    localStorage.setItem(CURRENT_USERNAME, username);
+
+  const getCurrentUsername = () => localStorage.getItem(CURRENT_USERNAME);
+
+  const getAllAnswers = () => {
+    let allAnswers = _toJson(localStorage.getItem(getCurrentUsername()));
+    if (!allAnswers) {
+      allAnswers = {};
+    }
+    return allAnswers;
   };
 
-  const getAnswer = (username, questionId) =>
-    getAllAnswers(username)[questionId];
+  const saveAnswer = (questionId, answer) => {
+    const answersOfUser = getAllAnswers();
+    answersOfUser[questionId] = answer;
+    localStorage.setItem(getCurrentUsername(), _toString(answersOfUser));
+  };
 
-  const hasAnswer = (username, questionId) => !!getAnswer(username, questionId);
+  const getAnswer = (questionId) => getAllAnswers()[questionId];
 
-  const resetUser = (username) =>
-    window.localStorage.setItem(username, _toString('{}'));
+  const hasAnswer = (questionId) => !!getAnswer(questionId);
 
-  const deleteUser = (username) => window.localStorage.removeItem(username);
+  const resetUser = () =>
+    localStorage.setItem(getCurrentUsername(), _toString({}));
 
-  const clearStorage = () => window.localStorage.clear();
+  const deleteUser = () => localStorage.removeItem(getCurrentUsername());
+
+  const clearStorage = () => localStorage.clear();
 
   const _toString = (obj) => JSON.stringify(obj);
 
-  const _toJson = (str) => {
-    if (!str) {
-      str = '{}';
-    }
-    return JSON.parse(str);
-  };
+  const _toJson = (str) => JSON.parse(str);
 
   return {
+    setCurrentUsername,
+    getCurrentUsername,
     saveAnswer,
     getAnswer,
     getAllAnswers,
