@@ -11,7 +11,7 @@ import {
  */
 export const createAnswerElement = (key, answerText) => {
   const element = document.createElement('li');
-  element.classList.add('answer', 'pointer');
+  element.classList.add('pointer');
   element.id = `${ANSWERS_OPTION_ID}_${key}`;
   element.innerHTML = String.raw`
     <span class="key">${key.toUpperCase()}</span> 
