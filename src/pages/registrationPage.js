@@ -1,6 +1,7 @@
 import { createRegistrationElement } from '../views/registrationView.js';
 import { storageService } from '../services/storeService.js';
 import { initQuestionPage } from './questionPage.js';
+import { createRandomQuestionList } from '../data.js';
 import {
   USER_INTERFACE_ID,
   REGISTRATION_PAGE_SAVE_BUTTON_ID,
@@ -37,5 +38,6 @@ const registerName = () => {
 };
 
 const startQuiz = () => {
+  createRandomQuestionList();
   initQuestionPage();
 };

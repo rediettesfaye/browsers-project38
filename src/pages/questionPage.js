@@ -9,11 +9,7 @@ import {
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { storageService } from '../services/storeService.js';
-import {
-  quizData,
-  randomQuestionsArray,
-  showRandomQuestions,
-} from '../data.js';
+import { quizData, randomQuestionsArray } from '../data.js';
 
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
@@ -111,10 +107,6 @@ const setStyleForSelectedAnswer = (key) => {
 const getCurrentQuestion = () => {
   return randomQuestionsArray[quizData.currentQuestionIndex];
 };
-
-window.addEventListener('load', () => {
-  showRandomQuestions();
-});
 
 const showCorrectAnswer = () => {
   const correctOption = getCurrentQuestion().correct;

@@ -370,15 +370,16 @@ export const quizData = {
 };
 
 export const randomQuestionsArray = [];
+const QUESTION_LIMIT = 10;
 
-export const showRandomQuestions = () => {
+export const createRandomQuestionList = () => {
   let randomIndexesOfQuestions = [];
 
   quizData.questions.forEach((question) => {
     let randomIndex = Math.floor(Math.random() * quizData.questions.length);
     if (
       !randomIndexesOfQuestions.includes(randomIndex) &&
-      randomIndexesOfQuestions.length < 10
+      randomIndexesOfQuestions.length < QUESTION_LIMIT
     ) {
       randomIndexesOfQuestions.push(randomIndex);
     }

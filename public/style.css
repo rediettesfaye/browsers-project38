@@ -60,6 +60,7 @@ li {
   padding: 10px;
   display: flex;
   align-items: center;
+  min-width: 300px;
 }
 
 .pointer {
