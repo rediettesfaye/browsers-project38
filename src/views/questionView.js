@@ -8,14 +8,13 @@ import { quizData } from '../data.js';
  * Create a full question element
  * @returns {Element}
  */
-export const createQuestionElement = (question) => {
-
+export const createQuestionElement = (questionNumber, question) => {
   const element = document.createElement('div');
   element.classList.add('question');
 
   // I use String.raw just to get fancy colors for the HTML in VS Code.
   element.innerHTML = String.raw`
-    <h1>${question}</h1>
+    <h1>${questionNumber} - ${question}</h1>
 
     <ul id="${ANSWERS_LIST_ID}">
     </ul>
