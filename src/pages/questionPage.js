@@ -8,8 +8,12 @@ import {
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
-import { quizData } from '../data.js';
 import { storageService } from '../services/storeService.js';
+import {
+  quizData,
+  randomQuestionsArray,
+  showRandomQuestions,
+} from '../data.js';
 
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
@@ -36,9 +40,16 @@ export const initQuestionPage = () => {
       .addEventListener('click', changeOption.bind(null, key));
   }
 
-  document
-    .getElementById(NEXT_QUESTION_BUTTON_ID)
-    .addEventListener('click', nextQuestion);
+  if (quizData.currentQuestionIndex < 9) {
+    document
+      .getElementById(NEXT_QUESTION_BUTTON_ID)
+      .addEventListener('click', nextQuestion);
+  } else {
+    document.getElementById(NEXT_QUESTION_BUTTON_ID).classList.add('hide');
+    const finishButton = document.createElement('button');
+    finishButton.innerText = 'See Results';
+    userInterface.appendChild(finishButton);
+  }
 };
 
 const createClassListForAnswer = (questionIndex, key) => {
@@ -57,7 +68,6 @@ const createClassListForAnswer = (questionIndex, key) => {
 
 const nextQuestion = () => {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
-
   initQuestionPage();
 };
 
@@ -99,8 +109,12 @@ const setStyleForSelectedAnswer = (key) => {
 };
 
 const getCurrentQuestion = () => {
-  return quizData.questions[quizData.currentQuestionIndex];
+  return randomQuestionsArray[quizData.currentQuestionIndex];
 };
+
+window.addEventListener('load', () => {
+  showRandomQuestions();
+});
 
 const showCorrectAnswer = () => {
   const correctOption = getCurrentQuestion().correct;
