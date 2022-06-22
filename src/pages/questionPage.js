@@ -10,6 +10,7 @@ import {
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { quizData, randomQuestionsArray } from '../data.js';
+import showRandomQuestions from '../views/showRandomQuestions.js';
 
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
@@ -107,18 +108,8 @@ const getCurrentQuestion = () => {
 };
 
 window.addEventListener('load' , () => { 
-  let randomIndexesOfQuestions = [];
+ showRandomQuestions(quizData, randomQuestionsArray)
 
-  quizData.questions.forEach(question =>{
-    let randomIndex = Math.floor(Math.random()* quizData.questions.length)
-    if(!randomIndexesOfQuestions.includes(randomIndex) && randomIndexesOfQuestions.length<10){
-      randomIndexesOfQuestions.push(randomIndex)
-    }
-  })
-    randomIndexesOfQuestions.forEach(index =>{
-      randomQuestionsArray.push(quizData.questions[index])
-    })
-    console.log(randomQuestionsArray)
    })
 
 const showCorrectAnswer = () => {
