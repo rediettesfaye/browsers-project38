@@ -49,10 +49,15 @@ initQuestionPage();
   }
 
 const changeOption = (key) => {
+  if (getCurrentQuestion().selected) {
+    return;
+  }
   getCurrentQuestion().selected = key;
   checkRadioButton(key);
   clearAllSelections();
+  clearAllPointerFromCursor();
   selectAnswer(key);
+  showCorrectAnswer();
 };
 
 const checkRadioButton = (key) => {
@@ -69,6 +74,14 @@ const clearAllSelections = () => {
   );
 };
 
+const clearAllPointerFromCursor = () => {
+  Array.from(document.getElementById(ANSWERS_LIST_ID).children).forEach(
+    (li) => {
+      li.classList.remove('pointer');
+    }
+  );
+}
+
 const selectAnswer = (key) => {
   document
     .getElementById(ANSWERS_OPTION_ID + '_' + key)
@@ -78,4 +91,11 @@ const selectAnswer = (key) => {
 const getCurrentQuestion = () => {
   return randomQuestionsArray[quizData.currentQuestionIndex]
  
+};
+
+const showCorrectAnswer = () => {
+  const correctOption = getCurrentQuestion().correct;
+  document
+    .getElementById(ANSWERS_OPTION_ID + '_' + correctOption)
+    .classList.add('correct-answer');
 };

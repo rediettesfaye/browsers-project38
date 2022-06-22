@@ -11,11 +11,12 @@ import {
  */
 export const createAnswerElement = (key, answerText) => {
   const element = document.createElement('li');
-  element.classList.add('answer');
+  element.classList.add('answer', 'pointer');
   element.id = `${ANSWERS_OPTION_ID}_${key}`;
   element.innerHTML = String.raw`
+    <span class="key">${key.toUpperCase()}</span> 
     <input type="radio" id="${ANSWERS_OPTION_RADIO_BUTTON_ID}_${key}" name="answer" value="${key}">
-    ${key.toUpperCase()}) ${answerText};
+    ${answerText};
   `;
   return element;
 };
