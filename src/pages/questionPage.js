@@ -9,8 +9,8 @@ import {
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
-import { quizData } from '../data.js';
-
+import { quizData, randomQuestionsArray } from '../data.js';
+import { showRandomQuestions } from '../data.js';
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
@@ -40,16 +40,26 @@ export const initQuestionPage = () => {
       .addEventListener('click', changeOption.bind(null, key));
   }
 
-  document
+  if(quizData.currentQuestionIndex < 9) {
+   document
     .getElementById(NEXT_QUESTION_BUTTON_ID)
     .addEventListener('click', nextQuestion);
+ } else {
+  document.getElementById(NEXT_QUESTION_BUTTON_ID).classList.add("hide")
+  const finishButton = document.createElement('button');
+  finishButton.innerText = "See Results" ;
+  userInterface.appendChild(finishButton)
+
+ }
+
+
 };
 
 const nextQuestion = () => {
-  quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
+quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
+initQuestionPage();
 
-  initQuestionPage();
-};
+  }
 
 const changeOption = (key) => {
   if (getCurrentQuestion().selected) {
@@ -92,8 +102,14 @@ const selectAnswer = (key) => {
 };
 
 const getCurrentQuestion = () => {
-  return quizData.questions[quizData.currentQuestionIndex];
+  return randomQuestionsArray[quizData.currentQuestionIndex]
+ 
 };
+
+window.addEventListener('load' , () => { 
+ showRandomQuestions()
+
+   })
 
 const showCorrectAnswer = () => {
   const correctOption = getCurrentQuestion().correct;
@@ -101,3 +117,4 @@ const showCorrectAnswer = () => {
     .getElementById(ANSWERS_OPTION_ID + '_' + correctOption)
     .classList.add('correct-answer');
 };
+
