@@ -26,6 +26,15 @@ body {
   margin-bottom: 30px;
 }
 
+#score {
+  margin: 30px 50px;
+  padding: 10px;
+  display: inline-block;
+  background-color: rgba(232, 232, 232, 1);
+  font-size: large;
+  border-radius: 5px;
+}
+
 .scrollable {
   height: auto;
   max-height: 80vh;
@@ -109,6 +118,16 @@ button {
 .correct-answer {
   background-color: rgb(194, 255, 187);
   border: 1px solid rgb(220, 220, 220);
+}
+
+.selected-answer{
+  background-color: beige;
+  margin: 0px;
+  border: 1px solid gainsboro;
+}
+
+.hide {
+  display: none;
 }
 
 .name-input {

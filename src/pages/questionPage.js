@@ -6,7 +6,7 @@ import {
   NEXT_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
 } from '../constants.js';
-import { createQuestionElement } from '../views/questionView.js';
+import { createQuestionElement, updateScore } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { storageService } from '../services/storeService.js';
 import { quizData, randomQuestionsArray, selectedAnswers} from '../data.js';
@@ -82,6 +82,7 @@ const changeOption = (key) => {
   selectAnswer(key);
   setStyleForSelectedAnswer(key);
   showCorrectAnswer();
+  updateScore(getCurrentQuestion().correct, key);
 };
 
 const clearAllSelections = () => {

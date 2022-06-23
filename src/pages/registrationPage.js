@@ -7,6 +7,7 @@ import {
   REGISTRATION_PAGE_SAVE_BUTTON_ID,
   USERNAME_INPUT_ID,
 } from '../constants.js';
+import {initScore} from '../views/questionView.js'
 
 export const initRegistrationPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
@@ -40,4 +41,5 @@ const registerName = () => {
 const startQuiz = () => {
   createRandomQuestionList();
   initQuestionPage();
+  initScore();
 };
