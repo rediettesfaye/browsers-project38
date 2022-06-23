@@ -9,8 +9,8 @@ import {
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { storageService } from '../services/storeService.js';
-import { quizData, randomQuestionsArray } from '../data.js';
-
+import { quizData, randomQuestionsArray, selectedAnswers} from '../data.js';
+import showResult from '../views/resultView.js';
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
@@ -39,7 +39,9 @@ export const initQuestionPage = () => {
       .addEventListener('click', changeOption.bind(null, key));
   }
 
-  if (quizData.currentQuestionIndex < 9) {
+  if (quizData.currentQuestionIndex < randomQuestionsArray.length - 1) {
+
+    console.log()
     document
       .getElementById(NEXT_QUESTION_BUTTON_ID)
       .addEventListener('click', nextQuestion);
@@ -48,6 +50,7 @@ export const initQuestionPage = () => {
     const finishButton = document.createElement('button');
     finishButton.innerText = 'See Results';
     userInterface.appendChild(finishButton);
+    finishButton.addEventListener('click',showResult)
   }
 };
 
@@ -98,7 +101,11 @@ const clearAllPointerFromCursor = () => {
 };
 
 const selectAnswer = (key) => {
+  const correctQuestion = getCurrentQuestion()
+  correctQuestion.selected = key
+  selectedAnswers.push(correctQuestion)
   storageService.saveAnswer(quizData.currentQuestionIndex, key);
+
 };
 
 const setStyleForSelectedAnswer = (key) => {
@@ -112,8 +119,10 @@ const getCurrentQuestion = () => {
 };
 
 const showCorrectAnswer = () => {
+
   const correctOption = getCurrentQuestion().correct;
   document
     .getElementById(ANSWERS_OPTION_ID + '_' + correctOption)
     .classList.add('correct-answer');
+    
 };

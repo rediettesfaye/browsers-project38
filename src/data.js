@@ -369,6 +369,8 @@ export const quizData = {
   ],
 };
 
+export const selectedAnswers = []
+
 export const randomQuestionsArray = [];
 const QUESTION_LIMIT = 10;
 
