@@ -12,4 +12,5 @@ export const START_QUIZ_BUTTON_ID = 'start-quiz-button';
 export const ANSWERS_LIST_ID = 'answers-list';
 export const NEXT_QUESTION_BUTTON_ID = 'next-question-button';
 export const ANSWERS_OPTION_ID = 'answers-option';
-export const ANSWERS_OPTION_RADIO_BUTTON_ID = 'answers-option-radio-button';
+export const USERNAME_INPUT_ID = 'username-input';
+export const REGISTRATION_PAGE_SAVE_BUTTON_ID = 'registration-page-save-button';
