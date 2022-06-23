@@ -8,7 +8,12 @@ import { quizData } from '../data.js';
  * Create a full question element
  * @returns {Element}
  */
+<<<<<<< changeTitle-addQuestion
+export const createQuestionElement = (question) => {
+
+=======
 export const createQuestionElement = (questionNumber, question) => {
+>>>>>>> main
   const element = document.createElement('div');
   element.classList.add('question');
 
