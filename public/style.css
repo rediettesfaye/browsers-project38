@@ -111,7 +111,6 @@ button {
   border: 1px solid rgb(220, 220, 220);
 }
 
-<<<<<<< changeTitle-addQuestion
 .selected-answer{
   background-color: beige;
   margin: 0px;
@@ -119,9 +118,9 @@ button {
 }
 
 .hide {
-
   display: none;
-=======
+}
+
 .name-input {
   display: block;
   width: 100%;
@@ -148,5 +147,4 @@ button {
   transition: background-color 1e8s ease 0s, box-shadow 0.1s ease-out 0s;
   box-shadow: rgb(19 124 117 / 30%) 0px 1px;
   background-color: transparent !important;
->>>>>>> main
 }
