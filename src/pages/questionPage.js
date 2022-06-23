@@ -40,8 +40,6 @@ export const initQuestionPage = () => {
   }
 
   if (quizData.currentQuestionIndex < randomQuestionsArray.length - 1) {
-
-    console.log()
     document
       .getElementById(NEXT_QUESTION_BUTTON_ID)
       .addEventListener('click', nextQuestion);
@@ -106,7 +104,6 @@ const selectAnswer = (key) => {
   correctQuestion.selected = key
   selectedAnswers.push(correctQuestion)
   storageService.saveAnswer(quizData.currentQuestionIndex, key);
-
 };
 
 const setStyleForSelectedAnswer = (key) => {
@@ -120,10 +117,8 @@ const getCurrentQuestion = () => {
 };
 
 const showCorrectAnswer = () => {
-
   const correctOption = getCurrentQuestion().correct;
   document
     .getElementById(ANSWERS_OPTION_ID + '_' + correctOption)
     .classList.add('correct-answer');
-    
 };

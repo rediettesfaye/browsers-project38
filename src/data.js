@@ -100,7 +100,6 @@ export const quizData = {
           text: 'Dutch Volcabulary',
           href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
-        
       ],
     },
     {
@@ -110,7 +109,6 @@ export const quizData = {
         b: 'de komkommer',
         c: 'de champignon',
         d: 'de ui',
-
       },
       correct: 'c',
       selected: null,
@@ -119,7 +117,6 @@ export const quizData = {
           text: 'Dutch Volcabulary',
           href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
-       
       ],
     },
     {
@@ -146,7 +143,6 @@ export const quizData = {
         b: 'Waar is het spoor',
         c: 'Waar is het winkel?',
         d: 'waar is het strand',
-    
       },
       correct: 'c',
       selected: null,
@@ -155,7 +151,6 @@ export const quizData = {
           text: 'Basic Dutch Phrases',
           href: 'https://ielanguages.com/dutch1.html',
         },
-       
       ],
     },
     {
@@ -173,7 +168,6 @@ export const quizData = {
           text: 'Dutch Volcabulary',
           href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
-       
       ],
     },
     {
@@ -191,7 +185,6 @@ export const quizData = {
           text: 'Basic Dutch Phrases',
           href: 'https://ielanguages.com/dutch1.html',
         },
-        
       ],
     },
     {
@@ -209,7 +202,6 @@ export const quizData = {
           text: 'Basic Dutch Phrases',
           href: 'https://ielanguages.com/dutch1.html',
         },
-        
       ],
     },
     {
@@ -227,7 +219,6 @@ export const quizData = {
           text: 'Basic Dutch Phrases',
           href: 'https://ielanguages.com/dutch1.html',
         },
-        
       ],
     },
     {
@@ -243,9 +234,9 @@ export const quizData = {
       links: [
          {
           text: 'Dutch Volcabulary',
-          href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
+          href:
+            'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
-        
       ],
     },
     {
@@ -263,8 +254,6 @@ export const quizData = {
           text: 'Dutch Volcabulary',
           href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
-        
-        
       ],
     },
     {
@@ -282,7 +271,6 @@ export const quizData = {
           text: 'Dutch Volcabulary',
           href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
-        
       ],
     },
      {
@@ -300,7 +288,6 @@ export const quizData = {
           text: 'Dutch Volcabulary',
           href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
-        
       ],
     },
      {
@@ -318,7 +305,6 @@ export const quizData = {
           text: 'Dutch Volcabulary',
           href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
-        
       ],
     },
      {
@@ -336,7 +322,6 @@ export const quizData = {
           text: 'Basic Dutch Phrases',
           href: 'https://ielanguages.com/dutch1.html',
         },
-        
       ],
     },
     {
@@ -354,7 +339,6 @@ export const quizData = {
           text: 'Basic Dutch Phrases',
           href: 'https://ielanguages.com/dutch1.html',
         },
-        
       ],
     },
     {
@@ -370,16 +354,15 @@ export const quizData = {
       links: [
          {
           text: 'Dutch Volcabulary',
-          href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
+          href:
+            'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
-        
       ],
     },
   ],
 };
 
 export const selectedAnswers = []
-
 export const randomQuestionsArray = [];
 const QUESTION_LIMIT = 10;
 
