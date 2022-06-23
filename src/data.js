@@ -21,7 +21,11 @@ export const quizData = {
         a: 'Goedemorgen',
         b: 'Tot ziens',
         c: 'Goedeavond',
+<<<<<<< changeTitle-addQuestion
         d: 'Goedmiddag'
+=======
+        d: 'Goedmiddag',
+>>>>>>> main
       },
       correct: 'a',
       selected: null,
@@ -30,7 +34,10 @@ export const quizData = {
           text: 'Basic Dutch Phrases',
           href: 'https://ielanguages.com/dutch1.html',
         },
+<<<<<<< changeTitle-addQuestion
        
+=======
+>>>>>>> main
       ],
     },
     {
@@ -48,8 +55,11 @@ export const quizData = {
           text: 'Basic Dutch Phrases',
           href: 'https://ielanguages.com/dutch1.html',
         },
+<<<<<<< changeTitle-addQuestion
        
         
+=======
+>>>>>>> main
       ],
     },
     {
@@ -65,9 +75,15 @@ export const quizData = {
       links: [
         {
           text: 'Dutch Volcabulary',
+<<<<<<< changeTitle-addQuestion
           href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
        
+=======
+          href:
+            'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
+        },
+>>>>>>> main
       ],
     },
     {
@@ -83,9 +99,15 @@ export const quizData = {
       links: [
         {
           text: 'Dutch Volcabulary',
+<<<<<<< changeTitle-addQuestion
           href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
        
+=======
+          href:
+            'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
+        },
+>>>>>>> main
       ],
     },
     {
@@ -101,6 +123,7 @@ export const quizData = {
       links: [
         {
           text: 'Dutch Volcabulary',
+<<<<<<< changeTitle-addQuestion
           href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
         
@@ -108,17 +131,187 @@ export const quizData = {
     },
     {
       text: 'What is the correct translation for "mushroom"??',
+=======
+          href:
+            'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
+        },
+      ],
+    },
+    {
+      text: 'What is the correct translation for "mashroom"??',
+>>>>>>> main
       answers: {
         a: 'de boter',
         b: 'de komkommer',
         c: 'de champignon',
         d: 'de ui',
+<<<<<<< changeTitle-addQuestion
+=======
       },
       correct: 'c',
       selected: null,
       links: [
         {
           text: 'Dutch Volcabulary',
+          href:
+            'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
+        },
+      ],
+    },
+    {
+      text: 'How do you say "I need a doctor"?',
+      answers: {
+        a: 'Waar is het strand',
+        b: 'Mag ik de rekening',
+        c: 'Ik weet het niet',
+        d: 'Ik heb een dokter nodig',
+      },
+      correct: 'd',
+      selected: null,
+      links: [
+        {
+          text: 'Basic Dutch Phrases',
+          href: 'https://ielanguages.com/dutch1.html',
+        },
+      ],
+    },
+    {
+      text: 'How do you say "Where is the shop??',
+      answers: {
+        a: 'Waar is het spoorwegstation?',
+        b: 'Waar is het spoor',
+        c: 'Waar is het winkel?',
+        d: 'waar is het strand',
+      },
+      correct: 'c',
+      selected: null,
+      links: [
+        {
+          text: 'Basic Dutch Phrases',
+          href: 'https://ielanguages.com/dutch1.html',
+        },
+      ],
+    },
+    {
+      text: 'How do you say "five o clock"?',
+      answers: {
+        a: 'tien uur',
+        b: 'zes uur',
+        c: 'acht uur',
+        d: 'vijf uur',
+      },
+      correct: 'd',
+      selected: null,
+      links: [
+        {
+          text: 'Dutch Volcabulary',
+          href:
+            'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
+        },
+      ],
+    },
+    {
+      text: 'How do you say "I am hungry"?',
+      answers: {
+        a: 'Ik heb honger',
+        b: 'Ik heb auto',
+        c: 'Ik heb geen pen',
+        d: 'Ik heb dorst',
+      },
+      correct: 'a',
+      selected: null,
+      links: [
+        {
+          text: 'Basic Dutch Phrases',
+          href: 'https://ielanguages.com/dutch1.html',
+        },
+      ],
+    },
+    {
+      text: 'How do you say "Happy Birthday"?',
+      answers: {
+        a: 'gelukkige nieuw jaar',
+        b: 'gelukkige  verjaardag',
+        c: 'gefeliciteerd',
+        d: 'fijne verjaardag',
+      },
+      correct: 'b',
+      selected: null,
+      links: [
+        {
+          text: 'Basic Dutch Phrases',
+          href: 'https://ielanguages.com/dutch1.html',
+        },
+      ],
+    },
+    {
+      text: 'How do you say "I have a appointment"?',
+      answers: {
+        a: 'Ik heb afspraak',
+        b: 'Ik heb auto',
+        c: 'Ik heb geen afspraak',
+        d: 'Ik heb dorst',
+      },
+      correct: 'a',
+      selected: null,
+      links: [
+        {
+          text: 'Basic Dutch Phrases',
+          href: 'https://ielanguages.com/dutch1.html',
+        },
+      ],
+    },
+    {
+      text: 'What is the correct translation for "breakfast"??',
+      answers: {
+        a: 'ontbijt',
+        b: 'tussendoortje',
+        c: 'toetje',
+        d: 'avondeten',
+      },
+      correct: 'a',
+      selected: null,
+      links: [
+        {
+          text: 'Dutch Volcabulary',
+          href:
+            'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
+        },
+      ],
+    },
+    {
+      text: 'What is the correct translation for "keys"?',
+      answers: {
+        a: 'tot ziens',
+        b: 'de sleutels',
+        c: 'goedeavond',
+        d: ' dorst',
+      },
+      correct: 'b',
+      selected: null,
+      links: [
+        {
+          text: 'Dutch Volcabulary',
+          href:
+            'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
+        },
+      ],
+    },
+    {
+      text: 'What is the correct translation for "umberlla"?',
+      answers: {
+        a: 'de fiets',
+        b: 'de telefone',
+        c: 'de paraplu',
+        d: 'het water',
+>>>>>>> main
+      },
+      correct: 'c',
+      selected: null,
+      links: [
+        {
+          text: 'Dutch Volcabulary',
+<<<<<<< changeTitle-addQuestion
           href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
        
@@ -138,11 +331,34 @@ export const quizData = {
         {
           text: 'Basic Dutch Phrases',
           href: 'https://ielanguages.com/dutch1.html',
+=======
+          href:
+            'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
+        },
+      ],
+    },
+    {
+      text: 'What is the correct translation for "sad"?',
+      answers: {
+        a: 'helaas',
+        b: 'zadel',
+        c: 'verdrietig',
+        d: 'vrolijk',
+      },
+      correct: 'c',
+      selected: null,
+      links: [
+        {
+          text: 'Dutch Volcabulary',
+          href:
+            'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
+>>>>>>> main
         },
        
       ],
     },
     {
+<<<<<<< changeTitle-addQuestion
       text: 'How do you say "Where is the shop??',
       answers: {
         a: 'Waar is het spoorwegstation?',
@@ -204,6 +420,14 @@ export const quizData = {
         b: 'gelukkige  verjaardag',
         c: 'gefeliciteerd',
         d: 'fijne verjaardag'
+=======
+      text: 'What is the correct translation for "delicious"?',
+      answers: {
+        a: 'voel',
+        b: 'verrukkelijk',
+        c: 'verdrietig',
+        d: 'vrolijk',
+>>>>>>> main
       },
       correct: 'b',
       selected: null,
@@ -301,6 +525,7 @@ export const quizData = {
       links: [
         {
           text: 'Dutch Volcabulary',
+<<<<<<< changeTitle-addQuestion
           href: 'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
         },
         
@@ -338,6 +563,62 @@ export const quizData = {
          {
           text: 'Basic Dutch Phrases',
           href: 'https://ielanguages.com/dutch1.html',
+=======
+          href:
+            'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
+        },
+      ],
+    },
+    {
+      text: 'How do you say "Sorry"?',
+      answers: {
+        a: 'dank u wel ',
+        b: 'Ik weet het niet',
+        c: 'Alstublieft',
+        d: 'het spijt me',
+      },
+      correct: 'd',
+      selected: null,
+      links: [
+        {
+          text: 'Basic Dutch Phrases',
+          href: 'https://ielanguages.com/dutch1.html',
+        },
+      ],
+    },
+    {
+      text: 'How do you say "Get well soon"?',
+      answers: {
+        a: 'beterschap ',
+        b: 'het gaat wel',
+        c: 'tot straks',
+        d: 'tot wel',
+      },
+      correct: 'a',
+      selected: null,
+      links: [
+        {
+          text: 'Basic Dutch Phrases',
+          href: 'https://ielanguages.com/dutch1.html',
+        },
+      ],
+    },
+    {
+      text: 'What is the correct translation for "cinema"',
+      answers: {
+        a: ' cinematographer ',
+        b: 'bioscoop',
+        c: 'theater',
+        d: 'films',
+      },
+      correct: 'b',
+      selected: null,
+      links: [
+        {
+          text: 'Dutch Volcabulary',
+          href:
+            'https://www.learndutch.org/lessons/introduce-yourself-in-dutch/',
+>>>>>>> main
         },
         
       ],
@@ -381,5 +662,27 @@ export const quizData = {
   ],
 };
 
+<<<<<<< changeTitle-addQuestion
 
     
+=======
+export const randomQuestionsArray = [];
+const QUESTION_LIMIT = 10;
+
+export const createRandomQuestionList = () => {
+  let randomIndexesOfQuestions = [];
+
+  quizData.questions.forEach((question) => {
+    let randomIndex = Math.floor(Math.random() * quizData.questions.length);
+    if (
+      !randomIndexesOfQuestions.includes(randomIndex) &&
+      randomIndexesOfQuestions.length < QUESTION_LIMIT
+    ) {
+      randomIndexesOfQuestions.push(randomIndex);
+    }
+  });
+  randomIndexesOfQuestions.forEach((index) => {
+    randomQuestionsArray.push(quizData.questions[index]);
+  });
+};
+>>>>>>> main

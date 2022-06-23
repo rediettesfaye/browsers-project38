@@ -3,13 +3,13 @@
 import {
   ANSWERS_LIST_ID,
   ANSWERS_OPTION_ID,
-  ANSWERS_OPTION_RADIO_BUTTON_ID,
   NEXT_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
-import { quizData } from '../data.js';
+import { storageService } from '../services/storeService.js';
+import { quizData, randomQuestionsArray } from '../data.js';
 
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
@@ -17,7 +17,10 @@ export const initQuestionPage = () => {
 
   const currentQuestion = getCurrentQuestion();
 
-  const questionElement = createQuestionElement(currentQuestion.text);
+  const questionElement = createQuestionElement(
+    quizData.currentQuestionIndex + 1,
+    currentQuestion.text
+  );
 
   userInterface.appendChild(questionElement);
 
@@ -27,43 +30,55 @@ export const initQuestionPage = () => {
     const answerElement = createAnswerElement(
       key,
       answerText,
-      currentQuestion.selected
+      createClassListForAnswer(quizData.currentQuestionIndex, key)
     );
     answersListElement.appendChild(answerElement);
-
-    document
-      .getElementById(ANSWERS_OPTION_RADIO_BUTTON_ID + '_' + key)
-      .addEventListener('change', changeOption.bind(null, key));
 
     document
       .getElementById(ANSWERS_OPTION_ID + '_' + key)
       .addEventListener('click', changeOption.bind(null, key));
   }
 
+  if (quizData.currentQuestionIndex < 9) {
+    document
+      .getElementById(NEXT_QUESTION_BUTTON_ID)
+      .addEventListener('click', nextQuestion);
+  } else {
+    document.getElementById(NEXT_QUESTION_BUTTON_ID).classList.add('hide');
+    const finishButton = document.createElement('button');
+    finishButton.innerText = 'See Results';
+    userInterface.appendChild(finishButton);
+  }
+};
+
+const createClassListForAnswer = (questionIndex, key) => {
+  const classList = [];
+  if (storageService.hasAnswer(questionIndex)) {
+    if (getCurrentQuestion().correct === key) {
+      classList.push('correct-answer');
+    } else if (storageService.getAnswer(questionIndex) === key) {
+      classList.push('selected-answer');
+    }
+  } else {
+    classList.push('pointer');
+  }
+  return classList.length > 0 ? classList : null;
 };
 
 const nextQuestion = () => {
-quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
-initQuestionPage();
-
-  }
+  quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
+  initQuestionPage();
+};
 
 const changeOption = (key) => {
-  if (getCurrentQuestion().selected) {
+  if (storageService.hasAnswer(quizData.currentQuestionIndex)) {
     return;
   }
-  getCurrentQuestion().selected = key;
-  checkRadioButton(key);
   clearAllSelections();
   clearAllPointerFromCursor();
   selectAnswer(key);
+  setStyleForSelectedAnswer(key);
   showCorrectAnswer();
-};
-
-const checkRadioButton = (key) => {
-  document.getElementById(
-    ANSWERS_OPTION_RADIO_BUTTON_ID + '_' + key
-  ).checked = true;
 };
 
 const clearAllSelections = () => {
@@ -80,17 +95,20 @@ const clearAllPointerFromCursor = () => {
       li.classList.remove('pointer');
     }
   );
-}
+};
 
 const selectAnswer = (key) => {
+  storageService.saveAnswer(quizData.currentQuestionIndex, key);
+};
+
+const setStyleForSelectedAnswer = (key) => {
   document
     .getElementById(ANSWERS_OPTION_ID + '_' + key)
     .classList.add('selected-answer');
 };
 
 const getCurrentQuestion = () => {
-  return randomQuestionsArray[quizData.currentQuestionIndex]
- 
+  return randomQuestionsArray[quizData.currentQuestionIndex];
 };
 
 const showCorrectAnswer = () => {
