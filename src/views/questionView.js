@@ -26,3 +26,23 @@ export const createQuestionElement = (questionNumber, question) => {
 
   return element;
 };
+
+export const initScore = () => {
+  const score = document.body.appendChild(document.createElement('div'));
+  score.id = "score"
+  score.textContent = "Score: 0"
+}
+
+let count = 0;
+
+export const updateScore = (correct, selected) => {
+
+  const showScore = () => {
+    const score = document.getElementById('score')
+    score.textContent = `Score: ${count}`
+  }
+  if(correct === selected){
+    count++
+    showScore()
+  }
+}
