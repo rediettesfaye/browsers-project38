@@ -2,7 +2,9 @@
 
 import { ANSWERS_LIST_ID } from '../constants.js';
 import { NEXT_QUESTION_BUTTON_ID } from '../constants.js';
-import { quizData } from "../data.js";
+import { quizData } from '../data.js';
+import { NEXT_QUESTION_BUTTON_ID, SCORE } from '../constants.js';
+import { quizData } from '../data.js';
 
 /**
  * Create a full question element
@@ -27,22 +29,20 @@ export const createQuestionElement = (questionNumber, question) => {
   return element;
 };
 
-export const initScore = () => {
-  const score = document.body.appendChild(document.createElement('div'));
-  score.id = "score"
-  score.textContent = "Score: 0"
-}
+export const initScore = (count) => {
+  const score = document.createElement('div');
 
-let count = 0;
+  score.innerHTML = String.raw`
+    <h1 id = "${SCORE}">
+      Score: ${count}
+    </h1>
+  `;
 
-export const updateScore = (correct, selected) => {
+  return score;
+};
 
-  const showScore = () => {
-    const score = document.getElementById('score')
-    score.textContent = `Score: ${count}`
+export const updateScore = (correct, key) => {
+  if (correct === key) {
+    quizData.score++;
   }
-  if(correct === selected){
-    count++
-    showScore()
-  }
-}
+};
