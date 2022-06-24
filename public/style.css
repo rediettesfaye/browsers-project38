@@ -18,6 +18,7 @@ body {
   transform: translate(-50%, -50%);
   text-align: center;
   width: 100%;
+  height: 100%;
   max-width: 720px;
 }
 
@@ -30,6 +31,18 @@ body {
   height: auto;
   max-height: 80vh;
   overflow: auto;
+}
+
+.page {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: auto;
+  left: 100%;
+  bottom: auto;
+  right: auto;
+  background: #7f4a88;
+  transition: all 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .question {
@@ -100,9 +113,7 @@ button {
   margin-left: 15px;
 }
 
-
 .hide {
-
   display: none;
 }
 
@@ -137,4 +148,46 @@ button {
   transition: background-color 1e8s ease 0s, box-shadow 0.1s ease-out 0s;
   box-shadow: rgb(19 124 117 / 30%) 0px 1px;
   background-color: transparent !important;
+}
+
+#transition-container-1,
+#transition-container-2 {
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  height: inherit;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.slide-to-top {
+  animation: moveToTop 0.7s ease-in-out both;
+}
+
+.slide-from-bottom {
+  animation: moveFromBottom 0.7s ease-in-out both;
+}
+
+.container-on-front {
+  z-index: 999;
+}
+
+@keyframes moveToTop {
+  to {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes moveFromBottom {
+  from {
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+  }
 }

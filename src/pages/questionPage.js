@@ -4,16 +4,17 @@ import {
   ANSWERS_LIST_ID,
   ANSWERS_OPTION_ID,
   NEXT_QUESTION_BUTTON_ID,
-  USER_INTERFACE_ID,
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { storageService } from '../services/storeService.js';
 import { quizData, randomQuestionsArray } from '../data.js';
+import { pageTransitionService } from '../services/pageTransitionService.js';
+
+let container;
 
 export const initQuestionPage = () => {
-  const userInterface = document.getElementById(USER_INTERFACE_ID);
-  userInterface.innerHTML = '';
+  container = pageTransitionService.getIdleContainer();
 
   const currentQuestion = getCurrentQuestion();
 
@@ -22,9 +23,9 @@ export const initQuestionPage = () => {
     currentQuestion.text
   );
 
-  userInterface.appendChild(questionElement);
+  container.appendChild(questionElement);
 
-  const answersListElement = document.getElementById(ANSWERS_LIST_ID);
+  const answersListElement = container.querySelector('#' + ANSWERS_LIST_ID);
 
   for (const [key, answerText] of Object.entries(currentQuestion.answers)) {
     const answerElement = createAnswerElement(
@@ -34,21 +35,25 @@ export const initQuestionPage = () => {
     );
     answersListElement.appendChild(answerElement);
 
-    document
-      .getElementById(ANSWERS_OPTION_ID + '_' + key)
+    container
+      .querySelector('#' + ANSWERS_OPTION_ID + '_' + key)
       .addEventListener('click', changeOption.bind(null, key));
   }
 
   if (quizData.currentQuestionIndex < 9) {
-    document
-      .getElementById(NEXT_QUESTION_BUTTON_ID)
+    container
+      .querySelector('#' + NEXT_QUESTION_BUTTON_ID)
       .addEventListener('click', nextQuestion);
   } else {
-    document.getElementById(NEXT_QUESTION_BUTTON_ID).classList.add('hide');
+    container
+      .querySelector('#' + NEXT_QUESTION_BUTTON_ID)
+      .classList.add('hide');
     const finishButton = document.createElement('button');
     finishButton.innerText = 'See Results';
-    userInterface.appendChild(finishButton);
+    container.appendChild(finishButton);
   }
+
+  pageTransitionService.slideUp();
 };
 
 const createClassListForAnswer = (questionIndex, key) => {
@@ -82,7 +87,7 @@ const changeOption = (key) => {
 };
 
 const clearAllSelections = () => {
-  Array.from(document.getElementById(ANSWERS_LIST_ID).children).forEach(
+  Array.from(container.querySelector('#' + ANSWERS_LIST_ID).children).forEach(
     (li) => {
       li.classList.remove('selected-answer');
     }
@@ -90,7 +95,7 @@ const clearAllSelections = () => {
 };
 
 const clearAllPointerFromCursor = () => {
-  Array.from(document.getElementById(ANSWERS_LIST_ID).children).forEach(
+  Array.from(container.querySelector('#' + ANSWERS_LIST_ID).children).forEach(
     (li) => {
       li.classList.remove('pointer');
     }
@@ -102,8 +107,8 @@ const selectAnswer = (key) => {
 };
 
 const setStyleForSelectedAnswer = (key) => {
-  document
-    .getElementById(ANSWERS_OPTION_ID + '_' + key)
+  container
+    .querySelector('#' + ANSWERS_OPTION_ID + '_' + key)
     .classList.add('selected-answer');
 };
 
@@ -113,7 +118,7 @@ const getCurrentQuestion = () => {
 
 const showCorrectAnswer = () => {
   const correctOption = getCurrentQuestion().correct;
-  document
-    .getElementById(ANSWERS_OPTION_ID + '_' + correctOption)
+  container
+    .querySelector('#' + ANSWERS_OPTION_ID + '_' + correctOption)
     .classList.add('correct-answer');
 };

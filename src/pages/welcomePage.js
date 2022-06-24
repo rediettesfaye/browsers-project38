@@ -1,19 +1,21 @@
 'use strict';
 
-import { USER_INTERFACE_ID, START_QUIZ_BUTTON_ID } from '../constants.js';
+import { START_QUIZ_BUTTON_ID } from '../constants.js';
+import { pageTransitionService } from '../services/pageTransitionService.js';
 import { createWelcomeElement } from '../views/welcomeView.js';
 import { initRegistrationPage } from './registrationPage.js';
 
 export const initWelcomePage = () => {
-  const userInterface = document.getElementById(USER_INTERFACE_ID);
-  userInterface.innerHTML = '';
+  const idleContainer = pageTransitionService.getIdleContainer();
 
   const welcomeElement = createWelcomeElement();
-  userInterface.appendChild(welcomeElement);
+  idleContainer.appendChild(welcomeElement);
 
   document
     .getElementById(START_QUIZ_BUTTON_ID)
     .addEventListener('click', registerUsername);
+
+  pageTransitionService.slideUp();
 };
 
 const registerUsername = () => {
