@@ -1,11 +1,11 @@
 import { USER_INTERFACE_ID } from '../constants.js';
+import { pageTransitionService } from '../services/pageTransitionService.js';
 import showResult from '../views/resultView.js';
 
-const resultPage = () => {
-  const userInterface = document.getElementById(USER_INTERFACE_ID);
-  userInterface.innerHTML = '';
+export const resultPage = () => {
+  const container = pageTransitionService.getIdleContainer();
   const result = showResult();
-  userInterface.appendChild(result);
-};
+  container.appendChild(result);
 
-export default resultPage;
+  pageTransitionService.slideUp();
+};
