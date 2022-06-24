@@ -16,3 +16,4 @@ export const USERNAME_INPUT_ID = 'username-input';
 export const REGISTRATION_PAGE_SAVE_BUTTON_ID = 'registration-page-save-button';
 export const TRANSITION_CONTAINER_1_ID = 'transition-container-1';
 export const TRANSITION_CONTAINER_2_ID = 'transition-container-2';
+export const SCORE = "score"
