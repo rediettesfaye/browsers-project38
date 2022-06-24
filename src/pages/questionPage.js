@@ -8,9 +8,10 @@ import {
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { storageService } from '../services/storeService.js';
-import { quizData, randomQuestionsArray } from '../data.js';
 import { pageTransitionService } from '../services/pageTransitionService.js';
 import { initScore, updateScore } from '../pages/scorePage.js';
+import { quizData, randomQuestionsArray, selectedAnswers } from '../data.js';
+import { resultPage } from './resultpages.js';
 
 let container;
 
@@ -44,7 +45,7 @@ export const initQuestionPage = () => {
       .addEventListener('click', changeOption.bind(null, key));
   }
 
-  if (quizData.currentQuestionIndex < 9) {
+  if (quizData.currentQuestionIndex < randomQuestionsArray.length - 1) {
     container
       .querySelector('#' + NEXT_QUESTION_BUTTON_ID)
       .addEventListener('click', nextQuestion);
@@ -54,7 +55,9 @@ export const initQuestionPage = () => {
       .classList.add('hide');
     const finishButton = document.createElement('button');
     finishButton.innerText = 'See Results';
+
     container.appendChild(finishButton);
+    finishButton.addEventListener('click', resultPage);
   }
 
   pageTransitionService.slideUp();
@@ -108,6 +111,9 @@ const clearAllPointerFromCursor = () => {
 };
 
 const selectAnswer = (key) => {
+  const correctQuestion = getCurrentQuestion();
+  correctQuestion.selected = key;
+  selectedAnswers.push(correctQuestion);
   storageService.saveAnswer(quizData.currentQuestionIndex, key);
 };
 
