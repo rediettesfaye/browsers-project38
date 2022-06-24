@@ -6,22 +6,21 @@ import {
   NEXT_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
 } from '../constants.js';
-import { 
-  createQuestionElement, 
-  initScore, 
-  updateScore 
+import {
+  createQuestionElement,
+  initScore,
+  updateScore,
 } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { storageService } from '../services/storeService.js';
-import { quizData, randomQuestionsArray, selectedAnswers} from '../data.js';
-import showResult from '../views/resultView.js';
+import { quizData, randomQuestionsArray, selectedAnswers } from '../data.js';
+import resultPage from './resultpages.js';
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
 
-  const showScore = initScore(quizData.score)
-  userInterface.appendChild(showScore)
-
+  const showScore = initScore(quizData.score);
+  userInterface.appendChild(showScore);
   const currentQuestion = getCurrentQuestion();
 
   const questionElement = createQuestionElement(
@@ -55,7 +54,7 @@ export const initQuestionPage = () => {
     const finishButton = document.createElement('button');
     finishButton.innerText = 'See Results';
     userInterface.appendChild(finishButton);
-    finishButton.addEventListener('click',showResult)
+    finishButton.addEventListener('click', resultPage);
   }
 };
 
@@ -87,7 +86,7 @@ const changeOption = (key) => {
   selectAnswer(key);
   setStyleForSelectedAnswer(key);
   showCorrectAnswer();
-  updateScore(getCurrentQuestion().correct, key)
+  updateScore(getCurrentQuestion().correct, key);
 };
 
 const clearAllSelections = () => {
@@ -107,9 +106,9 @@ const clearAllPointerFromCursor = () => {
 };
 
 const selectAnswer = (key) => {
-  const correctQuestion = getCurrentQuestion()
-  correctQuestion.selected = key
-  selectedAnswers.push(correctQuestion)
+  const correctQuestion = getCurrentQuestion();
+  correctQuestion.selected = key;
+  selectedAnswers.push(correctQuestion);
   storageService.saveAnswer(quizData.currentQuestionIndex, key);
 };
 
@@ -129,4 +128,3 @@ const showCorrectAnswer = () => {
     .getElementById(ANSWERS_OPTION_ID + '_' + correctOption)
     .classList.add('correct-answer');
 };
-

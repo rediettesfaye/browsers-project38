@@ -1,19 +1,14 @@
-import { USER_INTERFACE_ID } from '../constants.js';
 import { selectedAnswers } from '../data.js';
 
 const showResult = () => {
-  const userInterface = document.getElementById(USER_INTERFACE_ID);
-  userInterface.innerHTML = '';
-
   const resultElement = document.createElement('div');
   resultElement.setAttribute('id', 'result');
-  resultElement.innerHTML = `<h3>Results</h3>
-  <ul id="list"></ul>`;
-  userInterface.appendChild(resultElement);
-  const resultList = document.getElementById('list');
+  const heading = document.createElement('h3');
+  heading.innerText = 'Results';
+  const ulElement = document.createElement('h3');
+  ulElement.setAttribute('id', 'list');
 
   selectedAnswers.forEach((answer) => {
-    console.log(answer);
     const li = document.createElement('li');
     const h4 = document.createElement('h4');
     const p = document.createElement('p');
@@ -24,8 +19,12 @@ const showResult = () => {
 
     li.appendChild(h4);
     li.appendChild(p);
-    resultList.appendChild(li);
+    ulElement.appendChild(li);
   });
+
+  resultElement.appendChild(ulElement);
+  console.log(resultElement);
+  return resultElement;
 };
 
 export default showResult;
