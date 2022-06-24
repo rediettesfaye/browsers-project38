@@ -6,7 +6,7 @@ import {
   NEXT_QUESTION_BUTTON_ID,
   USER_INTERFACE_ID,
 } from '../constants.js';
-import { createQuestionElement, updateScore } from '../views/questionView.js';
+import { createQuestionElement, initScore } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { storageService } from '../services/storeService.js';
 import { quizData, randomQuestionsArray } from '../data.js';
@@ -14,6 +14,9 @@ import { quizData, randomQuestionsArray } from '../data.js';
 export const initQuestionPage = () => {
   const userInterface = document.getElementById(USER_INTERFACE_ID);
   userInterface.innerHTML = '';
+
+  const showScore = initScore(quizData.score)
+  userInterface.appendChild(showScore)
 
   const currentQuestion = getCurrentQuestion();
 
@@ -79,7 +82,7 @@ const changeOption = (key) => {
   selectAnswer(key);
   setStyleForSelectedAnswer(key);
   showCorrectAnswer();
-  updateScore(getCurrentQuestion().correct, key);
+  updateScore(key)
 };
 
 const clearAllSelections = () => {
@@ -118,3 +121,8 @@ const showCorrectAnswer = () => {
     .getElementById(ANSWERS_OPTION_ID + '_' + correctOption)
     .classList.add('correct-answer');
 };
+const updateScore = (key) => {
+  if(getCurrentQuestion().correct === key){
+    quizData.score++
+  } 
+}
