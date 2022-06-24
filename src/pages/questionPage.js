@@ -5,23 +5,20 @@ import {
   ANSWERS_OPTION_ID,
   NEXT_QUESTION_BUTTON_ID,
 } from '../constants.js';
-import { 
-  createQuestionElement, 
-  initScore, 
-  updateScore 
-} from '../views/questionView.js';
+import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { storageService } from '../services/storeService.js';
 import { quizData, randomQuestionsArray } from '../data.js';
 import { pageTransitionService } from '../services/pageTransitionService.js';
+import { initScore, updateScore } from '../pages/scorePage.js';
 
 let container;
 
 export const initQuestionPage = () => {
   container = pageTransitionService.getIdleContainer();
 
-  const showScore = initScore(quizData.score)
-  userInterface.appendChild(showScore)
+  const showScore = initScore(quizData.score);
+  container.appendChild(showScore);
 
   const currentQuestion = getCurrentQuestion();
 
@@ -91,7 +88,7 @@ const changeOption = (key) => {
   selectAnswer(key);
   setStyleForSelectedAnswer(key);
   showCorrectAnswer();
-  updateScore(getCurrentQuestion().correct, key)
+  updateScore(getCurrentQuestion().correct, key);
 };
 
 const clearAllSelections = () => {
@@ -130,4 +127,3 @@ const showCorrectAnswer = () => {
     .querySelector('#' + ANSWERS_OPTION_ID + '_' + correctOption)
     .classList.add('correct-answer');
 };
-

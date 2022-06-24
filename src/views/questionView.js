@@ -1,8 +1,7 @@
 'use strict';
 
 import { ANSWERS_LIST_ID } from '../constants.js';
-import { NEXT_QUESTION_BUTTON_ID, SCORE } from '../constants.js';
-import { quizData } from '../data.js';
+import { NEXT_QUESTION_BUTTON_ID } from '../constants.js';
 
 /**
  * Create a full question element
@@ -26,27 +25,3 @@ export const createQuestionElement = (questionNumber, question) => {
 
   return element;
 };
-
-
-export const initScore = (count) => {
-  const score = document.createElement('div');
-
-  score.innerHTML = String.raw`
-    <h1 id = "${SCORE}">
-      Score: ${count}
-    </h1>
-  `;
-
-  return score;
-}
-
-export const updateScore = (correct, key) => {
-  if(correct === key){
-    quizData.score++
-  } 
-}
-
-
-
-
-

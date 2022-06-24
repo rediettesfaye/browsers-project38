@@ -34,6 +34,8 @@ export const pageTransitionService = (() => {
     }
   };
 
+  const getCurrentContainer = () => currentContainer;
+
   const slideUp = () => {
     const container1 = document.getElementById(TRANSITION_CONTAINER_1_ID);
     const container2 = document.getElementById(TRANSITION_CONTAINER_2_ID);
@@ -66,6 +68,7 @@ export const pageTransitionService = (() => {
 
   return {
     getIdleContainer,
+    getCurrentContainer,
     slideUp,
   };
 })();
