@@ -5,21 +5,38 @@ import { createRandomQuestionList } from '../data.js';
 import {
   REGISTRATION_PAGE_SAVE_BUTTON_ID,
   USERNAME_INPUT_ID,
+  BUTTON_GROUP_ID,
+  PREV_BUTTON_ID,
 } from '../constants.js';
 import { pageTransitionService } from '../services/pageTransitionService.js';
+import { createButton, createButtonGroup } from './buttonPage.js';
+import { initWelcomePage } from '../pages/welcomePage.js';
 
 export const initRegistrationPage = () => {
   const idleContainer = pageTransitionService.getIdleContainer();
 
   const registrationElement = createRegistrationElement();
 
+  const buttonGroup = createButtonGroup(BUTTON_GROUP_ID);
+  buttonGroup.appendChild(
+    createButton({
+      id: PREV_BUTTON_ID,
+      text: 'PREVIOUS',
+      callback: previousPage,
+    })
+  );
+  buttonGroup.appendChild(
+    createButton({
+      id: REGISTRATION_PAGE_SAVE_BUTTON_ID,
+      text: 'NEXT',
+      callback: registerName,
+    })
+  );
+  registrationElement.appendChild(buttonGroup);
+
   idleContainer.appendChild(registrationElement);
 
   setDefaultUserName();
-
-  document
-    .getElementById(REGISTRATION_PAGE_SAVE_BUTTON_ID)
-    .addEventListener('click', registerName);
 
   pageTransitionService.slideUp();
 };
@@ -41,4 +58,8 @@ const registerName = () => {
 const startQuiz = () => {
   createRandomQuestionList();
   initQuestionPage();
+};
+
+const previousPage = () => {
+  initWelcomePage();
 };

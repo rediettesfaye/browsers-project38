@@ -11,7 +11,6 @@ export const createWelcomeElement = () => {
   element.innerHTML = String.raw`
     <img id = "welcome-img" src = "public/images/welcome-img.jpeg" alt="Netherlands flag"/>
     <h1>Test your language</h1>
-    <button id="${START_QUIZ_BUTTON_ID}">start</button>
   `;
   return element;
 };

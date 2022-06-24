@@ -4,6 +4,9 @@ import {
   ANSWERS_LIST_ID,
   ANSWERS_OPTION_ID,
   NEXT_QUESTION_BUTTON_ID,
+  PREV_QUESTION_BUTTON_ID,
+  BUTTON_GROUP_ID,
+  RESULT_BUTTON_ID,
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
@@ -11,7 +14,12 @@ import { storageService } from '../services/storeService.js';
 import { pageTransitionService } from '../services/pageTransitionService.js';
 import { initScore, updateScore } from '../pages/scorePage.js';
 import { quizData, randomQuestionsArray, selectedAnswers } from '../data.js';
-import { resultPage } from './resultpages.js';
+import { resultPage } from './resultPage.js';
+import {
+  createButton,
+  updateButton,
+  createButtonGroup,
+} from '../pages/buttonPage.js';
 
 let container;
 
@@ -46,18 +54,32 @@ export const initQuestionPage = () => {
   }
 
   if (quizData.currentQuestionIndex < randomQuestionsArray.length - 1) {
-    container
-      .querySelector('#' + NEXT_QUESTION_BUTTON_ID)
-      .addEventListener('click', nextQuestion);
-  } else {
-    container
-      .querySelector('#' + NEXT_QUESTION_BUTTON_ID)
-      .classList.add('hide');
-    const finishButton = document.createElement('button');
-    finishButton.innerText = 'See Results';
+    const buttonGroup = createButtonGroup(BUTTON_GROUP_ID);
+    container.appendChild(buttonGroup);
 
-    container.appendChild(finishButton);
-    finishButton.addEventListener('click', resultPage);
+    buttonGroup.appendChild(
+      createButton({
+        id: PREV_QUESTION_BUTTON_ID,
+        text: 'PREVIOUS',
+        callback: prevQuestion,
+      })
+    );
+
+    buttonGroup.appendChild(
+      createButton({
+        id: NEXT_QUESTION_BUTTON_ID,
+        text: 'SKIP',
+        callback: showAnswer,
+      })
+    );
+  } else {
+    container.appendChild(
+      createButton({
+        id: RESULT_BUTTON_ID,
+        text: 'See Results',
+        callback: resultPage,
+      })
+    );
   }
 
   pageTransitionService.slideUp();
@@ -82,6 +104,11 @@ const nextQuestion = () => {
   initQuestionPage();
 };
 
+const prevQuestion = () => {
+  quizData.currentQuestionIndex = quizData.currentQuestionIndex - 1;
+  initQuestionPage();
+};
+
 const changeOption = (key) => {
   if (storageService.hasAnswer(quizData.currentQuestionIndex)) {
     return;
@@ -92,6 +119,7 @@ const changeOption = (key) => {
   setStyleForSelectedAnswer(key);
   showCorrectAnswer();
   updateScore(getCurrentQuestion().correct, key);
+  updateBtn();
 };
 
 const clearAllSelections = () => {
@@ -132,4 +160,18 @@ const showCorrectAnswer = () => {
   container
     .querySelector('#' + ANSWERS_OPTION_ID + '_' + correctOption)
     .classList.add('correct-answer');
+};
+
+const updateBtn = () => {
+  updateButton({
+    container: container,
+    id: NEXT_QUESTION_BUTTON_ID,
+    text: 'NEXT',
+    callback: nextQuestion,
+  });
+};
+
+const showAnswer = () => {
+  showCorrectAnswer();
+  updateBtn();
 };
