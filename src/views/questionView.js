@@ -27,7 +27,6 @@ export const createQuestionElement = (questionNumber, question) => {
   return element;
 };
 
-
 export const initScore = (count) => {
   const score = document.createElement('div');
 
@@ -38,15 +37,10 @@ export const initScore = (count) => {
   `;
 
   return score;
-}
+};
 
 export const updateScore = (correct, key) => {
-  if(correct === key){
-    quizData.score++
-  } 
-}
-
-
-
-
-
+  if (correct === key) {
+    quizData.score++;
+  }
+};
