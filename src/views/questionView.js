@@ -40,6 +40,12 @@ export const initScore = (count) => {
   return score;
 }
 
+export const updateScore = (correct, key) => {
+  if(correct === key){
+    quizData.score++
+  } 
+}
+
 
 
 
