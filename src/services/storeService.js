@@ -1,4 +1,5 @@
 const CURRENT_USERNAME = 'CURRENT_USERNAME';
+const SCORE = 'SCORE';
 
 export const storageService = (() => {
   const setCurrentUsername = (username) =>
@@ -31,6 +32,16 @@ export const storageService = (() => {
 
   const clearStorage = () => localStorage.clear();
 
+  const saveUserScore = (score) => {
+    const answersOfUser = getAllAnswers();
+    answersOfUser[SCORE] = score;
+    localStorage.setItem(getCurrentUsername(), _toString(answersOfUser));
+  };
+
+  const getUserScore = () => getAllAnswers()[SCORE] ?? 0;
+
+  const resetUserScore = () => (getAllAnswers()[SCORE] = 0);
+
   const _toString = (obj) => JSON.stringify(obj);
 
   const _toJson = (str) => JSON.parse(str);
@@ -45,5 +56,8 @@ export const storageService = (() => {
     resetUser,
     deleteUser,
     clearStorage,
+    saveUserScore,
+    getUserScore,
+    resetUserScore,
   };
 })();

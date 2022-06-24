@@ -4,23 +4,23 @@ import {
   ANSWERS_LIST_ID,
   ANSWERS_OPTION_ID,
   NEXT_QUESTION_BUTTON_ID,
-  USER_INTERFACE_ID,
 } from '../constants.js';
-import {
-  createQuestionElement,
-  initScore,
-  updateScore,
-} from '../views/questionView.js';
+import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { storageService } from '../services/storeService.js';
+import { pageTransitionService } from '../services/pageTransitionService.js';
+import { initScore, updateScore } from '../pages/scorePage.js';
 import { quizData, randomQuestionsArray, selectedAnswers } from '../data.js';
-import resultPage from './resultpages.js';
+import { resultPage } from './resultpages.js';
+
+let container;
+
 export const initQuestionPage = () => {
-  const userInterface = document.getElementById(USER_INTERFACE_ID);
-  userInterface.innerHTML = '';
+  container = pageTransitionService.getIdleContainer();
 
   const showScore = initScore(quizData.score);
-  userInterface.appendChild(showScore);
+  container.appendChild(showScore);
+
   const currentQuestion = getCurrentQuestion();
 
   const questionElement = createQuestionElement(
@@ -28,9 +28,9 @@ export const initQuestionPage = () => {
     currentQuestion.text
   );
 
-  userInterface.appendChild(questionElement);
+  container.appendChild(questionElement);
 
-  const answersListElement = document.getElementById(ANSWERS_LIST_ID);
+  const answersListElement = container.querySelector('#' + ANSWERS_LIST_ID);
 
   for (const [key, answerText] of Object.entries(currentQuestion.answers)) {
     const answerElement = createAnswerElement(
@@ -40,22 +40,27 @@ export const initQuestionPage = () => {
     );
     answersListElement.appendChild(answerElement);
 
-    document
-      .getElementById(ANSWERS_OPTION_ID + '_' + key)
+    container
+      .querySelector('#' + ANSWERS_OPTION_ID + '_' + key)
       .addEventListener('click', changeOption.bind(null, key));
   }
 
   if (quizData.currentQuestionIndex < randomQuestionsArray.length - 1) {
-    document
-      .getElementById(NEXT_QUESTION_BUTTON_ID)
+    container
+      .querySelector('#' + NEXT_QUESTION_BUTTON_ID)
       .addEventListener('click', nextQuestion);
   } else {
-    document.getElementById(NEXT_QUESTION_BUTTON_ID).classList.add('hide');
+    container
+      .querySelector('#' + NEXT_QUESTION_BUTTON_ID)
+      .classList.add('hide');
     const finishButton = document.createElement('button');
     finishButton.innerText = 'See Results';
-    userInterface.appendChild(finishButton);
+
+    container.appendChild(finishButton);
     finishButton.addEventListener('click', resultPage);
   }
+
+  pageTransitionService.slideUp();
 };
 
 const createClassListForAnswer = (questionIndex, key) => {
@@ -90,7 +95,7 @@ const changeOption = (key) => {
 };
 
 const clearAllSelections = () => {
-  Array.from(document.getElementById(ANSWERS_LIST_ID).children).forEach(
+  Array.from(container.querySelector('#' + ANSWERS_LIST_ID).children).forEach(
     (li) => {
       li.classList.remove('selected-answer');
     }
@@ -98,7 +103,7 @@ const clearAllSelections = () => {
 };
 
 const clearAllPointerFromCursor = () => {
-  Array.from(document.getElementById(ANSWERS_LIST_ID).children).forEach(
+  Array.from(container.querySelector('#' + ANSWERS_LIST_ID).children).forEach(
     (li) => {
       li.classList.remove('pointer');
     }
@@ -113,8 +118,8 @@ const selectAnswer = (key) => {
 };
 
 const setStyleForSelectedAnswer = (key) => {
-  document
-    .getElementById(ANSWERS_OPTION_ID + '_' + key)
+  container
+    .querySelector('#' + ANSWERS_OPTION_ID + '_' + key)
     .classList.add('selected-answer');
 };
 
@@ -124,7 +129,7 @@ const getCurrentQuestion = () => {
 
 const showCorrectAnswer = () => {
   const correctOption = getCurrentQuestion().correct;
-  document
-    .getElementById(ANSWERS_OPTION_ID + '_' + correctOption)
+  container
+    .querySelector('#' + ANSWERS_OPTION_ID + '_' + correctOption)
     .classList.add('correct-answer');
 };
