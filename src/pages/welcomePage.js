@@ -4,20 +4,26 @@ import { START_QUIZ_BUTTON_ID } from '../constants.js';
 import { pageTransitionService } from '../services/pageTransitionService.js';
 import { createWelcomeElement } from '../views/welcomeView.js';
 import { initRegistrationPage } from './registrationPage.js';
+import { createButton } from './questionPage.js';
 
 export const initWelcomePage = () => {
   const idleContainer = pageTransitionService.getIdleContainer();
 
   const welcomeElement = createWelcomeElement();
+  welcomeElement.appendChild(
+    createButton({
+      id: START_QUIZ_BUTTON_ID,
+      text: 'START',
+      callback: start,
+    })
+  );
+
   idleContainer.appendChild(welcomeElement);
 
-  document
-    .getElementById(START_QUIZ_BUTTON_ID)
-    .addEventListener('click', registerUsername);
-
-  pageTransitionService.slideUp();
+  pageTransitionService.slide();
 };
 
-const registerUsername = () => {
+const start = () => {
+  pageTransitionService.setSlideDirectionUp();
   initRegistrationPage();
 };

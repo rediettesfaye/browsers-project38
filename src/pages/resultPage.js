@@ -7,5 +7,5 @@ export const resultPage = () => {
   const result = showResult();
   container.appendChild(result);
 
-  pageTransitionService.slideUp();
+  pageTransitionService.slide();
 };

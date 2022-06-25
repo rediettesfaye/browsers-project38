@@ -5,23 +5,39 @@ import { createRandomQuestionList } from '../data.js';
 import {
   REGISTRATION_PAGE_SAVE_BUTTON_ID,
   USERNAME_INPUT_ID,
+  PREV_BUTTON_ID,
 } from '../constants.js';
 import { pageTransitionService } from '../services/pageTransitionService.js';
+import { createButton, createButtonGroup } from './questionPage.js';
+import { initWelcomePage } from '../pages/welcomePage.js';
 
 export const initRegistrationPage = () => {
   const idleContainer = pageTransitionService.getIdleContainer();
 
   const registrationElement = createRegistrationElement();
 
+  const buttonGroup = createButtonGroup('start');
+  buttonGroup.appendChild(
+    createButton({
+      id: PREV_BUTTON_ID,
+      text: 'PREVIOUS',
+      callback: previousPage,
+    })
+  );
+  buttonGroup.appendChild(
+    createButton({
+      id: REGISTRATION_PAGE_SAVE_BUTTON_ID,
+      text: 'NEXT',
+      callback: registerName,
+    })
+  );
+  registrationElement.appendChild(buttonGroup);
+
   idleContainer.appendChild(registrationElement);
 
   setDefaultUserName();
 
-  document
-    .getElementById(REGISTRATION_PAGE_SAVE_BUTTON_ID)
-    .addEventListener('click', registerName);
-
-  pageTransitionService.slideUp();
+  pageTransitionService.slide();
 };
 
 const setDefaultUserName = () => {
@@ -34,11 +50,19 @@ const setDefaultUserName = () => {
 const registerName = () => {
   const usernameInput = document.getElementById(USERNAME_INPUT_ID);
   storageService.setCurrentUsername(usernameInput.value);
-  storageService.resetUser(usernameInput.value);
+  // storageService.resetUser(usernameInput.value);
   startQuiz();
 };
 
 const startQuiz = () => {
-  createRandomQuestionList();
+  pageTransitionService.setSlideDirectionUp();
+  if (!storageService.hasQuestions()) {
+    createRandomQuestionList();
+  }
   initQuestionPage();
+};
+
+const previousPage = () => {
+  pageTransitionService.setSlideDirectionDown();
+  initWelcomePage();
 };

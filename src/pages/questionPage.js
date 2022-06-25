@@ -4,14 +4,22 @@ import {
   ANSWERS_LIST_ID,
   ANSWERS_OPTION_ID,
   NEXT_QUESTION_BUTTON_ID,
+  PREV_QUESTION_BUTTON_ID,
+  SKIP_QUESTION_BUTTON_ID,
+  RESULT_BUTTON_ID,
+  RESET_BUTTON_ID,
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
 import { storageService } from '../services/storeService.js';
 import { pageTransitionService } from '../services/pageTransitionService.js';
 import { initScore, updateScore } from '../pages/scorePage.js';
-import { quizData, randomQuestionsArray, selectedAnswers } from '../data.js';
-import { resultPage } from './resultpages.js';
+import { quizData } from '../data.js';
+import { resultPage } from './resultPage.js';
+import { initRegistrationPage } from './registrationPage.js';
+import { initWelcomePage } from './welcomePage.js';
+import { createButtonElement } from '../views/buttonView.js';
+import { createButtonGroupElement } from '../views/buttonView.js';
 
 let container;
 
@@ -45,22 +53,9 @@ export const initQuestionPage = () => {
       .addEventListener('click', changeOption.bind(null, key));
   }
 
-  if (quizData.currentQuestionIndex < randomQuestionsArray.length - 1) {
-    container
-      .querySelector('#' + NEXT_QUESTION_BUTTON_ID)
-      .addEventListener('click', nextQuestion);
-  } else {
-    container
-      .querySelector('#' + NEXT_QUESTION_BUTTON_ID)
-      .classList.add('hide');
-    const finishButton = document.createElement('button');
-    finishButton.innerText = 'See Results';
+  createButtons();
 
-    container.appendChild(finishButton);
-    finishButton.addEventListener('click', resultPage);
-  }
-
-  pageTransitionService.slideUp();
+  pageTransitionService.slide();
 };
 
 const createClassListForAnswer = (questionIndex, key) => {
@@ -77,9 +72,84 @@ const createClassListForAnswer = (questionIndex, key) => {
   return classList.length > 0 ? classList : null;
 };
 
+const createButtons = () => {
+  const buttonGroupParent = createButtonGroup('space-between');
+  if (quizData.currentQuestionIndex < storageService.getQuestionCount() - 1) {
+    const buttonGroupLeft = createButtonGroup('start');
+    const buttonGroupRight = createButtonGroup('end');
+
+    buttonGroupParent.appendChild(buttonGroupLeft);
+    buttonGroupParent.appendChild(buttonGroupRight);
+
+    container.appendChild(buttonGroupParent);
+
+    const hasAnswer = storageService.hasAnswer(quizData.currentQuestionIndex);
+
+    buttonGroupLeft.appendChild(
+      createButton({
+        id: PREV_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
+        text: 'PREVIOUS',
+        callback: prevQuestion,
+      })
+    );
+
+    buttonGroupLeft.appendChild(
+      createButton({
+        id: NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
+        text: 'NEXT',
+        callback: nextQuestion,
+        visibility: hasAnswer,
+      })
+    );
+
+    buttonGroupLeft.appendChild(
+      createButton({
+        id: SKIP_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
+        text: 'SKIP',
+        callback: skipQuestion,
+        visibility: !hasAnswer,
+      })
+    );
+
+    buttonGroupRight.appendChild(
+      createButton({
+        id: RESET_BUTTON_ID + '_' + quizData.currentQuestionIndex,
+        text: 'RESET',
+        callback: resetQuiz,
+      })
+    );
+  } else {
+    container.appendChild(buttonGroupParent);
+    buttonGroupParent.appendChild(
+      createButton({
+        id: RESULT_BUTTON_ID,
+        text: 'SEE RESULTS',
+        callback: showResultPage,
+      })
+    );
+  }
+};
+
 const nextQuestion = () => {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
+  pageTransitionService.setSlideDirectionUp();
   initQuestionPage();
+};
+
+const prevQuestion = () => {
+  pageTransitionService.setSlideDirectionDown();
+  if (quizData.currentQuestionIndex > 0) {
+    quizData.currentQuestionIndex = quizData.currentQuestionIndex - 1;
+    initQuestionPage();
+  } else {
+    initRegistrationPage();
+  }
+};
+
+const resetQuiz = () => {
+  storageService.resetUser();
+  quizData.currentQuestionIndex = 0;
+  initWelcomePage();
 };
 
 const changeOption = (key) => {
@@ -92,6 +162,8 @@ const changeOption = (key) => {
   setStyleForSelectedAnswer(key);
   showCorrectAnswer();
   updateScore(getCurrentQuestion().correct, key);
+  hideButton(SKIP_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex);
+  showButton(NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex);
 };
 
 const clearAllSelections = () => {
@@ -111,9 +183,6 @@ const clearAllPointerFromCursor = () => {
 };
 
 const selectAnswer = (key) => {
-  const correctQuestion = getCurrentQuestion();
-  correctQuestion.selected = key;
-  selectedAnswers.push(correctQuestion);
   storageService.saveAnswer(quizData.currentQuestionIndex, key);
 };
 
@@ -124,7 +193,7 @@ const setStyleForSelectedAnswer = (key) => {
 };
 
 const getCurrentQuestion = () => {
-  return randomQuestionsArray[quizData.currentQuestionIndex];
+  return quizData.questions[quizData.currentQuestionIndex];
 };
 
 const showCorrectAnswer = () => {
@@ -132,4 +201,49 @@ const showCorrectAnswer = () => {
   container
     .querySelector('#' + ANSWERS_OPTION_ID + '_' + correctOption)
     .classList.add('correct-answer');
+};
+
+const skipQuestion = () => {
+  storageService.saveAnswer(quizData.currentQuestionIndex, '-');
+  showCorrectAnswer();
+  hideButton(SKIP_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex);
+  showButton(NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex);
+};
+
+const showResultPage = () => {
+  pageTransitionService.setSlideDirectionUp();
+  resultPage();
+};
+
+export const createButton = ({ id, text, callback, visibility = true }) => {
+  const element = createButtonElement({
+    id: id,
+    text: text,
+    visibility: visibility,
+  });
+  element.querySelector('#' + id).addEventListener('click', callback);
+
+  return element;
+};
+
+const hideButton = (id) => {
+  const button = container.querySelector('#' + id);
+  if (!button) {
+    return;
+  }
+  button.style.display = 'none';
+};
+
+const showButton = (id) => {
+  const button = container.querySelector('#' + id);
+  if (!button) {
+    return;
+  }
+  button.style.display = 'block';
+};
+
+export const createButtonGroup = (justifyContent) => {
+  const element = createButtonGroupElement(justifyContent);
+
+  return element;
 };
