@@ -15,7 +15,6 @@ import { storageService } from './services/storeService.js';
 
 export const quizData = {
   currentQuestionIndex: 0,
-  score: 0,
   // the questions in the quiz
   questions: [
     {
@@ -372,7 +371,6 @@ export const quizData = {
   ],
 };
 
-export const selectedAnswers = [];
 const QUESTION_LIMIT = 10;
 
 export const createRandomQuestionList = () => {
@@ -385,9 +383,7 @@ export const createRandomQuestionList = () => {
       randomIndexesOfQuestions.length < QUESTION_LIMIT
     ) {
       randomIndexesOfQuestions.push(randomIndex);
+      storageService.setQuestion(randomIndex);
     }
-  });
-  randomIndexesOfQuestions.forEach((index) => {
-    storageService.setQuestion(index);
   });
 };

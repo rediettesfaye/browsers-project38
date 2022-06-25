@@ -13,6 +13,7 @@ export const ANSWERS_LIST_ID = 'answers-list';
 export const PREV_BUTTON_ID = 'prev-button';
 export const NEXT_QUESTION_BUTTON_ID = 'next-question-button';
 export const PREV_QUESTION_BUTTON_ID = 'prev-question-button';
+export const SKIP_QUESTION_BUTTON_ID = 'skip-question-button';
 export const RESULT_BUTTON_ID = 'result-button';
 export const RESET_BUTTON_ID = 'reset-button';
 export const ANSWERS_OPTION_ID = 'answers-option';

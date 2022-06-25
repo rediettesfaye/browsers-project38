@@ -8,7 +8,7 @@ import {
   PREV_BUTTON_ID,
 } from '../constants.js';
 import { pageTransitionService } from '../services/pageTransitionService.js';
-import { createButton, createButtonGroup } from './buttonPage.js';
+import { createButton, createButtonGroup } from './questionPage.js';
 import { initWelcomePage } from '../pages/welcomePage.js';
 
 export const initRegistrationPage = () => {

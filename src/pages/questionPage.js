@@ -5,6 +5,7 @@ import {
   ANSWERS_OPTION_ID,
   NEXT_QUESTION_BUTTON_ID,
   PREV_QUESTION_BUTTON_ID,
+  SKIP_QUESTION_BUTTON_ID,
   RESULT_BUTTON_ID,
   RESET_BUTTON_ID,
 } from '../constants.js';
@@ -13,15 +14,12 @@ import { createAnswerElement } from '../views/answerView.js';
 import { storageService } from '../services/storeService.js';
 import { pageTransitionService } from '../services/pageTransitionService.js';
 import { initScore, updateScore } from '../pages/scorePage.js';
-import { quizData, selectedAnswers } from '../data.js';
+import { quizData } from '../data.js';
 import { resultPage } from './resultPage.js';
-import {
-  createButton,
-  updateButton,
-  createButtonGroup,
-} from '../pages/buttonPage.js';
 import { initRegistrationPage } from './registrationPage.js';
 import { initWelcomePage } from './welcomePage.js';
+import { createButtonElement } from '../views/buttonView.js';
+import { createButtonGroupElement } from '../views/buttonView.js';
 
 let container;
 
@@ -98,8 +96,18 @@ const createButtons = () => {
     buttonGroupLeft.appendChild(
       createButton({
         id: NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
-        text: hasAnswer ? 'NEXT' : 'SKIP',
-        callback: hasAnswer ? nextQuestion : showAnswer,
+        text: 'NEXT',
+        callback: nextQuestion,
+        visibility: hasAnswer,
+      })
+    );
+
+    buttonGroupLeft.appendChild(
+      createButton({
+        id: SKIP_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
+        text: 'SKIP',
+        callback: skipQuestion,
+        visibility: !hasAnswer,
       })
     );
 
@@ -115,7 +123,7 @@ const createButtons = () => {
     buttonGroupParent.appendChild(
       createButton({
         id: RESULT_BUTTON_ID,
-        text: 'See Results',
+        text: 'SEE RESULTS',
         callback: showResultPage,
       })
     );
@@ -140,6 +148,7 @@ const prevQuestion = () => {
 
 const resetQuiz = () => {
   storageService.resetUser();
+  quizData.currentQuestionIndex = 0;
   initWelcomePage();
 };
 
@@ -153,7 +162,8 @@ const changeOption = (key) => {
   setStyleForSelectedAnswer(key);
   showCorrectAnswer();
   updateScore(getCurrentQuestion().correct, key);
-  updateBtn();
+  hideButton(SKIP_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex);
+  showButton(NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex);
 };
 
 const clearAllSelections = () => {
@@ -173,9 +183,6 @@ const clearAllPointerFromCursor = () => {
 };
 
 const selectAnswer = (key) => {
-  const currentQuestion = getCurrentQuestion();
-  currentQuestion.selected = key;
-  selectedAnswers.push(currentQuestion);
   storageService.saveAnswer(quizData.currentQuestionIndex, key);
 };
 
@@ -196,22 +203,47 @@ const showCorrectAnswer = () => {
     .classList.add('correct-answer');
 };
 
-const updateBtn = () => {
-  updateButton({
-    container: container,
-    id: NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
-    text: 'NEXT',
-    callback: nextQuestion,
-  });
-};
-
-const showAnswer = () => {
+const skipQuestion = () => {
   storageService.saveAnswer(quizData.currentQuestionIndex, '-');
   showCorrectAnswer();
-  updateBtn();
+  hideButton(SKIP_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex);
+  showButton(NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex);
 };
 
 const showResultPage = () => {
   pageTransitionService.setSlideDirectionUp();
   resultPage();
+};
+
+export const createButton = ({ id, text, callback, visibility = true }) => {
+  const element = createButtonElement({
+    id: id,
+    text: text,
+    visibility: visibility,
+  });
+  element.querySelector('#' + id).addEventListener('click', callback);
+
+  return element;
+};
+
+const hideButton = (id) => {
+  const button = container.querySelector('#' + id);
+  if (!button) {
+    return;
+  }
+  button.style.display = 'none';
+};
+
+const showButton = (id) => {
+  const button = container.querySelector('#' + id);
+  if (!button) {
+    return;
+  }
+  button.style.display = 'block';
+};
+
+export const createButtonGroup = (justifyContent) => {
+  const element = createButtonGroupElement(justifyContent);
+
+  return element;
 };

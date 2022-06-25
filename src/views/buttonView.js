@@ -1,7 +1,8 @@
-export const createButtonElement = (id, text) => {
+export const createButtonElement = ({ id, text, visibility = true }) => {
   const element = document.createElement('div');
+  const display = visibility ? 'inline-block' : 'none';
   element.innerHTML = String.raw`
-      <button id='${id}'>${text}</button>
+      <button id='${id}' style='display:${display}'>${text}</button>
     `;
   return element;
 };

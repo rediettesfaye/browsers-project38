@@ -56,6 +56,11 @@ export const storageService = (() => {
     _saveUserData(userData);
   };
 
+  const getQuestions = () => {
+    const userData = getUserData();
+    return _getQuestionArray(userData);
+  };
+
   const getQuestionId = (questionIndex) => {
     const userData = getUserData();
     const questionArray = _getQuestionArray(userData);
@@ -115,6 +120,7 @@ export const storageService = (() => {
     getUserScore,
     resetUserScore,
     setQuestion,
+    getQuestions,
     getQuestionId,
     hasQuestions,
     getQuestionCount,
