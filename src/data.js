@@ -1,5 +1,7 @@
 'use strict';
 
+import { storageService } from './services/storeService.js';
+
 /* Program Data
 
   in this file you can declare variables to store important data for your program
@@ -371,7 +373,6 @@ export const quizData = {
 };
 
 export const selectedAnswers = [];
-export const randomQuestionsArray = [];
 const QUESTION_LIMIT = 10;
 
 export const createRandomQuestionList = () => {
@@ -387,6 +388,6 @@ export const createRandomQuestionList = () => {
     }
   });
   randomIndexesOfQuestions.forEach((index) => {
-    randomQuestionsArray.push(quizData.questions[index]);
+    storageService.setQuestion(index);
   });
 };

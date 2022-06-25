@@ -7,10 +7,16 @@ export const pageTransitionService = (() => {
   let currentContainer;
   let idleContainer;
 
-  const OUT_CLASS = 'slide-to-top';
-  const IN_CLASS = 'slide-from-bottom';
-  const INDEX_CLASS = 'container-on-front';
+  let slideDirection;
+
+  const UP = 'UP';
+  const DOWN = 'DOWN';
+
+  const SLIDE_TO_TOP_CLASS = 'slide-to-top';
+  const SLIDE_FROM_BOTTOM_CLASS = 'slide-from-bottom';
   const HIDE_CLASS = 'invisible';
+  const SLIDE_FROM_TOP_CLASS = 'slide-from-top';
+  const SLIDE_TO_BOTTOM_CLASS = 'slide-to-bottom';
 
   // this function brings the idle div.
   const getIdleContainer = () => {
@@ -36,23 +42,62 @@ export const pageTransitionService = (() => {
 
   const getCurrentContainer = () => currentContainer;
 
-  const slideUp = () => {
+  const setSlideDirectionUp = () => (slideDirection = UP);
+  const setSlideDirectionDown = () => (slideDirection = DOWN);
+
+  const slide = () => {
+    console.log(slideDirection);
+    if (slideDirection === DOWN) {
+      _slideDown();
+    } else {
+      _slideUp();
+    }
+  };
+
+  const _slideUp = () => {
     const container1 = document.getElementById(TRANSITION_CONTAINER_1_ID);
     const container2 = document.getElementById(TRANSITION_CONTAINER_2_ID);
 
     if (currentContainer) {
       currentContainer.addEventListener('animationend', _afterAnimation);
-      currentContainer.classList.remove(IN_CLASS);
-      currentContainer.classList.add(OUT_CLASS);
+      currentContainer.classList.remove(SLIDE_FROM_BOTTOM_CLASS);
+      currentContainer.classList.remove(SLIDE_FROM_TOP_CLASS);
+      currentContainer.classList.add(SLIDE_TO_TOP_CLASS);
       idleContainer.classList.remove(HIDE_CLASS);
-      idleContainer.classList.add(IN_CLASS);
+      idleContainer.classList.remove(SLIDE_TO_TOP_CLASS);
+      idleContainer.classList.remove(SLIDE_TO_BOTTOM_CLASS);
+      idleContainer.classList.add(SLIDE_FROM_BOTTOM_CLASS);
     } else {
       // at the beginning of the quiz, currentContainer and idleContainer are undefined,
       // so it assigns container1 to currentContainer, and container2 to idleContainer as a default
       currentContainer = container1;
       idleContainer = container2;
       currentContainer.classList.remove(HIDE_CLASS);
-      currentContainer.classList.add(IN_CLASS);
+      currentContainer.classList.add(SLIDE_FROM_BOTTOM_CLASS);
+      idleContainer.classList.add(HIDE_CLASS);
+    }
+  };
+
+  const _slideDown = () => {
+    const container1 = document.getElementById(TRANSITION_CONTAINER_1_ID);
+    const container2 = document.getElementById(TRANSITION_CONTAINER_2_ID);
+
+    if (currentContainer) {
+      currentContainer.addEventListener('animationend', _afterAnimation);
+      currentContainer.classList.remove(SLIDE_FROM_BOTTOM_CLASS);
+      currentContainer.classList.remove(SLIDE_FROM_TOP_CLASS);
+      currentContainer.classList.add(SLIDE_TO_BOTTOM_CLASS);
+      idleContainer.classList.remove(HIDE_CLASS);
+      idleContainer.classList.remove(SLIDE_TO_TOP_CLASS);
+      idleContainer.classList.remove(SLIDE_TO_BOTTOM_CLASS);
+      idleContainer.classList.add(SLIDE_FROM_TOP_CLASS);
+    } else {
+      // at the beginning of the quiz, currentContainer and idleContainer are undefined,
+      // so it assigns container1 to currentContainer, and container2 to idleContainer as a default
+      currentContainer = container1;
+      idleContainer = container2;
+      currentContainer.classList.remove(HIDE_CLASS);
+      currentContainer.classList.add(SLIDE_FROM_TOP_CLASS);
       idleContainer.classList.add(HIDE_CLASS);
     }
   };
@@ -69,6 +114,8 @@ export const pageTransitionService = (() => {
   return {
     getIdleContainer,
     getCurrentContainer,
-    slideUp,
+    setSlideDirectionUp,
+    setSlideDirectionDown,
+    slide,
   };
 })();

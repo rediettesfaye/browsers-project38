@@ -38,7 +38,7 @@ export const initRegistrationPage = () => {
 
   setDefaultUserName();
 
-  pageTransitionService.slideUp();
+  pageTransitionService.slide();
 };
 
 const setDefaultUserName = () => {
@@ -56,10 +56,14 @@ const registerName = () => {
 };
 
 const startQuiz = () => {
-  createRandomQuestionList();
+  pageTransitionService.setSlideDirectionUp();
+  if (!storageService.hasQuestions()) {
+    createRandomQuestionList();
+  }
   initQuestionPage();
 };
 
 const previousPage = () => {
+  pageTransitionService.setSlideDirectionDown();
   initWelcomePage();
 };

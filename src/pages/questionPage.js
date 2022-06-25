@@ -13,13 +13,14 @@ import { createAnswerElement } from '../views/answerView.js';
 import { storageService } from '../services/storeService.js';
 import { pageTransitionService } from '../services/pageTransitionService.js';
 import { initScore, updateScore } from '../pages/scorePage.js';
-import { quizData, randomQuestionsArray, selectedAnswers } from '../data.js';
+import { quizData, selectedAnswers } from '../data.js';
 import { resultPage } from './resultPage.js';
 import {
   createButton,
   updateButton,
   createButtonGroup,
 } from '../pages/buttonPage.js';
+import { initRegistrationPage } from './registrationPage.js';
 
 let container;
 
@@ -53,13 +54,13 @@ export const initQuestionPage = () => {
       .addEventListener('click', changeOption.bind(null, key));
   }
 
-  if (quizData.currentQuestionIndex < randomQuestionsArray.length - 1) {
+  if (quizData.currentQuestionIndex < storageService.getQuestionCount() - 1) {
     const buttonGroup = createButtonGroup(BUTTON_GROUP_ID);
     container.appendChild(buttonGroup);
 
     buttonGroup.appendChild(
       createButton({
-        id: PREV_QUESTION_BUTTON_ID,
+        id: PREV_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
         text: 'PREVIOUS',
         callback: prevQuestion,
       })
@@ -67,7 +68,7 @@ export const initQuestionPage = () => {
 
     buttonGroup.appendChild(
       createButton({
-        id: NEXT_QUESTION_BUTTON_ID,
+        id: NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
         text: 'SKIP',
         callback: showAnswer,
       })
@@ -77,12 +78,12 @@ export const initQuestionPage = () => {
       createButton({
         id: RESULT_BUTTON_ID,
         text: 'See Results',
-        callback: resultPage,
+        callback: showResultPage,
       })
     );
   }
 
-  pageTransitionService.slideUp();
+  pageTransitionService.slide();
 };
 
 const createClassListForAnswer = (questionIndex, key) => {
@@ -101,12 +102,18 @@ const createClassListForAnswer = (questionIndex, key) => {
 
 const nextQuestion = () => {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
+  pageTransitionService.setSlideDirectionUp();
   initQuestionPage();
 };
 
 const prevQuestion = () => {
-  quizData.currentQuestionIndex = quizData.currentQuestionIndex - 1;
-  initQuestionPage();
+  pageTransitionService.setSlideDirectionDown();
+  if (quizData.currentQuestionIndex > 0) {
+    quizData.currentQuestionIndex = quizData.currentQuestionIndex - 1;
+    initQuestionPage();
+  } else {
+    initRegistrationPage();
+  }
 };
 
 const changeOption = (key) => {
@@ -139,9 +146,9 @@ const clearAllPointerFromCursor = () => {
 };
 
 const selectAnswer = (key) => {
-  const correctQuestion = getCurrentQuestion();
-  correctQuestion.selected = key;
-  selectedAnswers.push(correctQuestion);
+  const currentQuestion = getCurrentQuestion();
+  currentQuestion.selected = key;
+  selectedAnswers.push(currentQuestion);
   storageService.saveAnswer(quizData.currentQuestionIndex, key);
 };
 
@@ -152,7 +159,7 @@ const setStyleForSelectedAnswer = (key) => {
 };
 
 const getCurrentQuestion = () => {
-  return randomQuestionsArray[quizData.currentQuestionIndex];
+  return quizData.questions[quizData.currentQuestionIndex];
 };
 
 const showCorrectAnswer = () => {
@@ -165,7 +172,7 @@ const showCorrectAnswer = () => {
 const updateBtn = () => {
   updateButton({
     container: container,
-    id: NEXT_QUESTION_BUTTON_ID,
+    id: NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
     text: 'NEXT',
     callback: nextQuestion,
   });
@@ -174,4 +181,9 @@ const updateBtn = () => {
 const showAnswer = () => {
   showCorrectAnswer();
   updateBtn();
+};
+
+const showResultPage = () => {
+  pageTransitionService.setSlideDirectionUp();
+  resultPage();
 };

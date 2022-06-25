@@ -14,15 +14,17 @@ export const initWelcomePage = () => {
     createButton({
       id: START_QUIZ_BUTTON_ID,
       text: 'START',
-      callback: registerUsername,
+      callback: start,
     })
   );
 
   idleContainer.appendChild(welcomeElement);
 
-  pageTransitionService.slideUp();
+  pageTransitionService.slide();
 };
 
-const registerUsername = () => {
+const start = () => {
+  console.log('start');
+  pageTransitionService.setSlideDirectionUp();
   initRegistrationPage();
 };
