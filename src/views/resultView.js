@@ -5,25 +5,29 @@ const showResult = () => {
   resultElement.setAttribute('id', 'result');
   const heading = document.createElement('h3');
   heading.innerText = 'Results';
-  const ulElement = document.createElement('h3');
+  const ulElement = document.createElement('ul');
   ulElement.setAttribute('id', 'list');
 
   selectedAnswers.forEach((answer) => {
     const li = document.createElement('li');
     const h4 = document.createElement('h4');
     const p = document.createElement('p');
+    const p2 = document.createElement('p');
     h4.innerHTML = answer.text;
-    p.innerText = `Selected : ${answer.answers[answer.selected]}  Correct : ${
+    p.innerHTML = `<span>Selected :</span>${
+      answer.answers[answer.selected]
+    }`
+    p2.innerHTML = `<span> Correct:</span>${
       answer.answers[answer.correct]
     }`;
 
     li.appendChild(h4);
     li.appendChild(p);
+    li.appendChild(p2);
     ulElement.appendChild(li);
   });
 
   resultElement.appendChild(ulElement);
-  console.log(resultElement);
   return resultElement;
 };
 
