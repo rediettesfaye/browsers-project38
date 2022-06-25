@@ -107,7 +107,7 @@ export const quizData = {
       ],
     },
     {
-      text: 'What is the correct translation for "mushroom"??',
+      text: 'What is the correct translation for "mushroom"?',
       answers: {
         a: 'de boter',
         b: 'de komkommer',
@@ -142,7 +142,7 @@ export const quizData = {
       ],
     },
     {
-      text: 'How do you say "Where is the shop??',
+      text: 'How do you say "Where is the shop?',
       answers: {
         a: 'Waar is het spoorwegstation?',
         b: 'Waar is het spoor',
@@ -228,7 +228,7 @@ export const quizData = {
       ],
     },
     {
-      text: 'What is the correct translation for "breakfast"??',
+      text: 'What is the correct translation for "breakfast"?',
       answers: {
         a: 'ontbijt',
         b: 'tussendoortje',
@@ -352,7 +352,7 @@ export const quizData = {
       ],
     },
     {
-      text: 'What is the correct translation for "cinema"',
+      text: 'What is the correct translation for "cinema"?',
       answers: {
         a: ' cinematographer ',
         b: 'bioscoop',

@@ -85,6 +85,8 @@ const createButtons = () => {
 
     container.appendChild(buttonGroupParent);
 
+    const hasAnswer = storageService.hasAnswer(quizData.currentQuestionIndex);
+
     buttonGroupLeft.appendChild(
       createButton({
         id: PREV_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
@@ -96,8 +98,8 @@ const createButtons = () => {
     buttonGroupLeft.appendChild(
       createButton({
         id: NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
-        text: 'SKIP',
-        callback: showAnswer,
+        text: hasAnswer ? 'NEXT' : 'SKIP',
+        callback: hasAnswer ? nextQuestion : showAnswer,
       })
     );
 
@@ -204,6 +206,7 @@ const updateBtn = () => {
 };
 
 const showAnswer = () => {
+  storageService.saveAnswer(quizData.currentQuestionIndex, '-');
   showCorrectAnswer();
   updateBtn();
 };
