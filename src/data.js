@@ -141,7 +141,7 @@ export const quizData = {
       ],
     },
     {
-      text: 'How do you say "Where is the shop?',
+      text: 'How do you say "Where is the shop"?',
       answers: {
         a: 'Waar is het spoorwegstation?',
         b: 'Waar is het spoor',
