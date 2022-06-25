@@ -24,7 +24,6 @@ export const initWelcomePage = () => {
 };
 
 const start = () => {
-  console.log('start');
   pageTransitionService.setSlideDirectionUp();
   initRegistrationPage();
 };

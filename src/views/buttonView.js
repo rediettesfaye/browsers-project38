@@ -6,9 +6,9 @@ export const createButtonElement = (id, text) => {
   return element;
 };
 
-export const createButtonGroupElement = (id) => {
+export const createButtonGroupElement = (justifyContent) => {
   const element = document.createElement('div');
-  element.id = id;
+  element.style.justifyContent = justifyContent;
   element.classList.add('button-group');
   return element;
 };

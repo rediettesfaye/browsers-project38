@@ -5,8 +5,8 @@ import {
   ANSWERS_OPTION_ID,
   NEXT_QUESTION_BUTTON_ID,
   PREV_QUESTION_BUTTON_ID,
-  BUTTON_GROUP_ID,
   RESULT_BUTTON_ID,
+  RESET_BUTTON_ID,
 } from '../constants.js';
 import { createQuestionElement } from '../views/questionView.js';
 import { createAnswerElement } from '../views/answerView.js';
@@ -21,6 +21,7 @@ import {
   createButtonGroup,
 } from '../pages/buttonPage.js';
 import { initRegistrationPage } from './registrationPage.js';
+import { initWelcomePage } from './welcomePage.js';
 
 let container;
 
@@ -54,34 +55,7 @@ export const initQuestionPage = () => {
       .addEventListener('click', changeOption.bind(null, key));
   }
 
-  if (quizData.currentQuestionIndex < storageService.getQuestionCount() - 1) {
-    const buttonGroup = createButtonGroup(BUTTON_GROUP_ID);
-    container.appendChild(buttonGroup);
-
-    buttonGroup.appendChild(
-      createButton({
-        id: PREV_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
-        text: 'PREVIOUS',
-        callback: prevQuestion,
-      })
-    );
-
-    buttonGroup.appendChild(
-      createButton({
-        id: NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
-        text: 'SKIP',
-        callback: showAnswer,
-      })
-    );
-  } else {
-    container.appendChild(
-      createButton({
-        id: RESULT_BUTTON_ID,
-        text: 'See Results',
-        callback: showResultPage,
-      })
-    );
-  }
+  createButtons();
 
   pageTransitionService.slide();
 };
@@ -100,6 +74,52 @@ const createClassListForAnswer = (questionIndex, key) => {
   return classList.length > 0 ? classList : null;
 };
 
+const createButtons = () => {
+  const buttonGroupParent = createButtonGroup('space-between');
+  if (quizData.currentQuestionIndex < storageService.getQuestionCount() - 1) {
+    const buttonGroupLeft = createButtonGroup('start');
+    const buttonGroupRight = createButtonGroup('end');
+
+    buttonGroupParent.appendChild(buttonGroupLeft);
+    buttonGroupParent.appendChild(buttonGroupRight);
+
+    container.appendChild(buttonGroupParent);
+
+    buttonGroupLeft.appendChild(
+      createButton({
+        id: PREV_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
+        text: 'PREVIOUS',
+        callback: prevQuestion,
+      })
+    );
+
+    buttonGroupLeft.appendChild(
+      createButton({
+        id: NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex,
+        text: 'SKIP',
+        callback: showAnswer,
+      })
+    );
+
+    buttonGroupRight.appendChild(
+      createButton({
+        id: RESET_BUTTON_ID + '_' + quizData.currentQuestionIndex,
+        text: 'RESET',
+        callback: resetQuiz,
+      })
+    );
+  } else {
+    container.appendChild(buttonGroupParent);
+    buttonGroupParent.appendChild(
+      createButton({
+        id: RESULT_BUTTON_ID,
+        text: 'See Results',
+        callback: showResultPage,
+      })
+    );
+  }
+};
+
 const nextQuestion = () => {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
   pageTransitionService.setSlideDirectionUp();
@@ -114,6 +134,11 @@ const prevQuestion = () => {
   } else {
     initRegistrationPage();
   }
+};
+
+const resetQuiz = () => {
+  storageService.resetUser();
+  initWelcomePage();
 };
 
 const changeOption = (key) => {

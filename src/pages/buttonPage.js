@@ -10,6 +10,9 @@ export const createButton = ({ id, text, callback }) => {
 
 export const updateButton = ({ container, id, text, callback }) => {
   const button = container.querySelector('#' + id);
+  if (!button) {
+    return;
+  }
   if (text) {
     button.innerText = text;
   }
@@ -18,8 +21,8 @@ export const updateButton = ({ container, id, text, callback }) => {
   }
 };
 
-export const createButtonGroup = (id) => {
-  const element = createButtonGroupElement(id);
+export const createButtonGroup = (justifyContent) => {
+  const element = createButtonGroupElement(justifyContent);
 
   return element;
 };

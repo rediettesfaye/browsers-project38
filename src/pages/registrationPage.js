@@ -5,7 +5,6 @@ import { createRandomQuestionList } from '../data.js';
 import {
   REGISTRATION_PAGE_SAVE_BUTTON_ID,
   USERNAME_INPUT_ID,
-  BUTTON_GROUP_ID,
   PREV_BUTTON_ID,
 } from '../constants.js';
 import { pageTransitionService } from '../services/pageTransitionService.js';
@@ -17,7 +16,7 @@ export const initRegistrationPage = () => {
 
   const registrationElement = createRegistrationElement();
 
-  const buttonGroup = createButtonGroup(BUTTON_GROUP_ID);
+  const buttonGroup = createButtonGroup('start');
   buttonGroup.appendChild(
     createButton({
       id: PREV_BUTTON_ID,

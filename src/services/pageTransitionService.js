@@ -46,7 +46,6 @@ export const pageTransitionService = (() => {
   const setSlideDirectionDown = () => (slideDirection = DOWN);
 
   const slide = () => {
-    console.log(slideDirection);
     if (slideDirection === DOWN) {
       _slideDown();
     } else {
