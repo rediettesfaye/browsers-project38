@@ -6,6 +6,7 @@ import { createWelcomeElement } from '../views/welcomeView.js';
 import { initRegistrationPage } from './registrationPage.js';
 import { createButton } from './questionPage.js';
 
+// it creates welcome page
 export const initWelcomePage = () => {
   const idleContainer = pageTransitionService.getIdleContainer();
 
@@ -23,6 +24,7 @@ export const initWelcomePage = () => {
   pageTransitionService.slide();
 };
 
+// it brings the registration page
 const start = () => {
   pageTransitionService.setSlideDirectionUp();
   initRegistrationPage();

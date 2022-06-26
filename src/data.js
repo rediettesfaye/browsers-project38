@@ -376,7 +376,7 @@ const QUESTION_LIMIT = 10;
 export const createRandomQuestionList = () => {
   let randomIndexesOfQuestions = [];
 
-  quizData.questions.forEach((question) => {
+  quizData.questions.forEach((_) => {
     let randomIndex = Math.floor(Math.random() * quizData.questions.length);
     if (
       !randomIndexesOfQuestions.includes(randomIndex) &&

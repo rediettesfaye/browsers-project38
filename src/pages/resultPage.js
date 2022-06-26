@@ -4,7 +4,7 @@ import showResult from '../views/resultView.js';
 import { resetResultButton } from '../views/resultView.js'
 
 
-
+// it creates result page
 export const resultPage = () => {
   const container = pageTransitionService.getIdleContainer();
   const result = showResult();
