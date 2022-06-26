@@ -146,7 +146,7 @@ const prevQuestion = () => {
   }
 };
 
-const resetQuiz = () => {
+export const resetQuiz = () => {
   storageService.resetUser();
   quizData.currentQuestionIndex = 0;
   initWelcomePage();
