@@ -42,9 +42,13 @@ export const pageTransitionService = (() => {
 
   const getCurrentContainer = () => currentContainer;
 
+  // it changes the slide direction to UP
   const setSlideDirectionUp = () => (slideDirection = UP);
+
+  // it changes the slide direction to DOWN
   const setSlideDirectionDown = () => (slideDirection = DOWN);
 
+  // it start the sliding according to the slide direction
   const slide = () => {
     if (slideDirection === DOWN) {
       _slideDown();
@@ -53,6 +57,7 @@ export const pageTransitionService = (() => {
     }
   };
 
+  // it sets the related styles to the div's for transition.
   const _slideUp = () => {
     const container1 = document.getElementById(TRANSITION_CONTAINER_1_ID);
     const container2 = document.getElementById(TRANSITION_CONTAINER_2_ID);
@@ -77,6 +82,7 @@ export const pageTransitionService = (() => {
     }
   };
 
+  // it sets the related styles to the div's for transition.
   const _slideDown = () => {
     const container1 = document.getElementById(TRANSITION_CONTAINER_1_ID);
     const container2 = document.getElementById(TRANSITION_CONTAINER_2_ID);
@@ -101,6 +107,8 @@ export const pageTransitionService = (() => {
     }
   };
 
+  // it works after animation finished, removes listener
+  // and swaps the currentContainer(div1) and idleContainer(div2)
   const _afterAnimation = () => {
     currentContainer.removeEventListener('animationend', _afterAnimation);
     currentContainer.classList.add(HIDE_CLASS);

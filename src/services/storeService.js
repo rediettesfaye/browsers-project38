@@ -4,11 +4,15 @@ const ANSWERS = 'ANSWERS';
 const SCORE = 'SCORE';
 
 export const storageService = (() => {
+  // it saves username to the local storage with the key 'CURRENT_USERNAME'.
   const setCurrentUsername = (username) =>
     localStorage.setItem(CURRENT_USERNAME, username);
 
+  // it brings the current username from local storage.
   const getCurrentUsername = () => localStorage.getItem(CURRENT_USERNAME);
 
+  // it brings user data belongs to the current user.
+  // if user data is undefined or null, it creates an empty object {}.
   const getUserData = () => {
     let userData = _toJson(localStorage.getItem(getCurrentUsername()));
     if (!userData) {
@@ -17,6 +21,8 @@ export const storageService = (() => {
     return userData;
   };
 
+  // it saves question index as key and answer as value 
+  // to the answers object under the user data.
   const saveAnswer = (questionId, answer) => {
     const userData = getUserData();
     const answers = _getAnswers(userData);
