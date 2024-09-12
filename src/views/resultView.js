@@ -1,5 +1,10 @@
 import { quizData } from '../data.js';
 import { storageService } from '../services/storeService.js';
+import { RESULT_BUTTON_ID } from '../constants.js';
+import { 
+  createButton, 
+  resetQuiz
+} from '../pages/questionPage.js';
 
 const showResult = () => {
   const resultElement = document.createElement('div');
@@ -33,3 +38,13 @@ const showResult = () => {
 };
 
 export default showResult;
+
+export const resetResultButton = () => {
+  const restartButton = createButton({
+    id: RESULT_BUTTON_ID,
+    text: 'RESTART QUIZ',
+    callback: resetQuiz,
+  })
+  restartButton.className = "reset-result-button"
+  return restartButton
+}

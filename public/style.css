@@ -82,26 +82,18 @@ button {
   background-color: rgb(37, 37, 37);
   border: none;
   border-radius: 5px;
+  padding: 0px 10px;
+  font-size: 12px;
+  margin-right:20px;
+  min-width: 60px;
 }
 
 #score {
-  margin-bottom: 100px;
+  margin-bottom: 80px;
   padding: 10px;
   display: inline-block;
   font-size: large;
   border-radius: 3px;
-}
-
-.page {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: auto;
-  left: 100%;
-  bottom: auto;
-  right: auto;
-  background: #7f4a88;
-  transition: all 0.9s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 .question {
@@ -149,22 +141,20 @@ li {
   color: rgba(250, 250, 250);
 }
 
-button {
-  align-self: start;
-  margin: 20px 4px 16px 16px;
-  padding: 16px;
-}
-
 .correct-answer {
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
+
 .correct-answer .key {
   background-color: #44803f;
   color: rgba(250, 250, 250);
 }
 
-#next-question-button {
-  margin: 25px 0 0 40px;
+.button-group {
+  display: flex;
+  flex-direction: row;
+  margin-right: 40%;
+  margin-left: 10px;
 }
 
 /* -- result page -- */
@@ -210,8 +200,14 @@ h4 {
   margin-right: 10px;
 }
 
-.hide {
-  display: none;
+.reset-result-button {
+  display: flex;
+  justify-content: center;
+}
+
+#result-button {
+ margin: 0;
+ margin: 50px;
 }
 
 /* -- animation -- */
@@ -279,7 +275,3 @@ h4 {
   }
 }
 
-.button-group {
-  display: flex;
-  flex-direction: row;
-}

@@ -141,7 +141,7 @@ export const quizData = {
       ],
     },
     {
-      text: 'How do you say "Where is the shop?',
+      text: 'How do you say "Where is the shop"?',
       answers: {
         a: 'Waar is het spoorwegstation?',
         b: 'Waar is het spoor',
@@ -376,7 +376,7 @@ const QUESTION_LIMIT = 10;
 export const createRandomQuestionList = () => {
   let randomIndexesOfQuestions = [];
 
-  quizData.questions.forEach((question) => {
+  quizData.questions.forEach((_) => {
     let randomIndex = Math.floor(Math.random() * quizData.questions.length);
     if (
       !randomIndexesOfQuestions.includes(randomIndex) &&

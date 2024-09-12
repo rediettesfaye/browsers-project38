@@ -1,11 +1,16 @@
-import { USER_INTERFACE_ID } from '../constants.js';
+
 import { pageTransitionService } from '../services/pageTransitionService.js';
 import showResult from '../views/resultView.js';
+import { resetResultButton } from '../views/resultView.js'
 
+
+// it creates result page
 export const resultPage = () => {
   const container = pageTransitionService.getIdleContainer();
   const result = showResult();
   container.appendChild(result);
+  const button = resetResultButton()
+  container.appendChild(button);
 
   pageTransitionService.slide();
 };

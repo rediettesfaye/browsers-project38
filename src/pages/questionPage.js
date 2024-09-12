@@ -23,6 +23,7 @@ import { createButtonGroupElement } from '../views/buttonView.js';
 
 let container;
 
+// it creates question page
 export const initQuestionPage = () => {
   container = pageTransitionService.getIdleContainer();
 
@@ -58,6 +59,9 @@ export const initQuestionPage = () => {
   pageTransitionService.slide();
 };
 
+// it sets the proper css classes('correct-answer', 'selected-answer')
+// for the options if the question was answered. 
+// if question has not been answered yet, it sets 'cursor:pointer' style to that option.
 const createClassListForAnswer = (questionIndex, key) => {
   const classList = [];
   if (storageService.hasAnswer(questionIndex)) {
@@ -72,6 +76,10 @@ const createClassListForAnswer = (questionIndex, key) => {
   return classList.length > 0 ? classList : null;
 };
 
+// it creates buttons for questions. every question has 'previous', 'skip', and 'next' button
+// but only one of the 'skip' and 'next' button is visible at the same time. it changes their
+// visibilities according to whether the answer has been answered or not.
+// And last question has only 'see result' button.
 const createButtons = () => {
   const buttonGroupParent = createButtonGroup('space-between');
   if (quizData.currentQuestionIndex < storageService.getQuestionCount() - 1) {
@@ -130,12 +138,14 @@ const createButtons = () => {
   }
 };
 
+// it changes question index to next one.
 const nextQuestion = () => {
   quizData.currentQuestionIndex = quizData.currentQuestionIndex + 1;
   pageTransitionService.setSlideDirectionUp();
   initQuestionPage();
 };
 
+// it changes question index to previous one
 const prevQuestion = () => {
   pageTransitionService.setSlideDirectionDown();
   if (quizData.currentQuestionIndex > 0) {
@@ -146,12 +156,17 @@ const prevQuestion = () => {
   }
 };
 
-const resetQuiz = () => {
+// it deletes all data is belong to the current user in the local storage
+// and also resets current question index to the 0.
+export const resetQuiz = () => {
   storageService.resetUser();
   quizData.currentQuestionIndex = 0;
   initWelcomePage();
 };
 
+// it clears all styles related to the option selection
+// and set style to the selected and correct answer.
+// and makes 'next button' visible, 'skip button' invisible.
 const changeOption = (key) => {
   if (storageService.hasAnswer(quizData.currentQuestionIndex)) {
     return;
@@ -166,6 +181,7 @@ const changeOption = (key) => {
   showButton(NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex);
 };
 
+// it clears 'selected-answer' style from all options.
 const clearAllSelections = () => {
   Array.from(container.querySelector('#' + ANSWERS_LIST_ID).children).forEach(
     (li) => {
@@ -174,6 +190,7 @@ const clearAllSelections = () => {
   );
 };
 
+// it clears 'pointer' style from all options.
 const clearAllPointerFromCursor = () => {
   Array.from(container.querySelector('#' + ANSWERS_LIST_ID).children).forEach(
     (li) => {
@@ -182,20 +199,24 @@ const clearAllPointerFromCursor = () => {
   );
 };
 
+// it saves correct answer to the local storage of browser.
 const selectAnswer = (key) => {
   storageService.saveAnswer(quizData.currentQuestionIndex, key);
 };
 
+// it sets style to the selected answer.
 const setStyleForSelectedAnswer = (key) => {
   container
     .querySelector('#' + ANSWERS_OPTION_ID + '_' + key)
     .classList.add('selected-answer');
 };
 
+// it gives current question.
 const getCurrentQuestion = () => {
-  return quizData.questions[quizData.currentQuestionIndex];
+  return quizData.questions[storageService.getQuestionId(quizData.currentQuestionIndex)];
 };
 
+// it sets style to the correct answer
 const showCorrectAnswer = () => {
   const correctOption = getCurrentQuestion().correct;
   container
@@ -203,6 +224,8 @@ const showCorrectAnswer = () => {
     .classList.add('correct-answer');
 };
 
+// it save '-' to the local storage for current question, it means this question left empty 
+// and it shows the correct answer, then changes the visibility of 'skip' and 'next' buttons.
 const skipQuestion = () => {
   storageService.saveAnswer(quizData.currentQuestionIndex, '-');
   showCorrectAnswer();
@@ -210,11 +233,13 @@ const skipQuestion = () => {
   showButton(NEXT_QUESTION_BUTTON_ID + '_' + quizData.currentQuestionIndex);
 };
 
+// it shows the result page.
 const showResultPage = () => {
   pageTransitionService.setSlideDirectionUp();
   resultPage();
 };
 
+// it creates button with the given parameters.
 export const createButton = ({ id, text, callback, visibility = true }) => {
   const element = createButtonElement({
     id: id,
@@ -226,6 +251,7 @@ export const createButton = ({ id, text, callback, visibility = true }) => {
   return element;
 };
 
+// it hides the button.
 const hideButton = (id) => {
   const button = container.querySelector('#' + id);
   if (!button) {
@@ -234,6 +260,7 @@ const hideButton = (id) => {
   button.style.display = 'none';
 };
 
+// it makes button visible.
 const showButton = (id) => {
   const button = container.querySelector('#' + id);
   if (!button) {
@@ -242,6 +269,7 @@ const showButton = (id) => {
   button.style.display = 'block';
 };
 
+// it creates a div for container with given 'justify-content' style.
 export const createButtonGroup = (justifyContent) => {
   const element = createButtonGroupElement(justifyContent);
 
